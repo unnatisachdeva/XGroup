@@ -156,11 +156,10 @@ export const FLEET_CATEGORIES = [
 ];
 
 export const CERTIFICATIONS = [
-  { name: "COR Certification (In Progress)", status: "Active Roadmap", badge: "COR" },
-  { name: "ISNetworld Member (In Progress)", status: "Verified Contractor", badge: "ISN" },
-  { name: "National Safety Code", status: "Compliant Fleet", badge: "NSC" },
+  { name: "ACE / ACI Bonded Carrier", status: "Cross-Border Ready", badge: "ACE" },
+  { name: "ACI", status: "Cross-Border Ready", badge: "ACI" },
   { name: "SmartWay Transport Partner", status: "Environmental Carrier", badge: "SmartWay" },
-  { name: "ACE / ACI Bonded Carrier", status: "Cross-Border Ready", badge: "ACE/ACI" },
+  { name: "US-Canada Bonded", status: "Bonded Carrier", badge: "US-Canada Bonded" },
 ];
 
 export const PERMIT_TOPICS = [

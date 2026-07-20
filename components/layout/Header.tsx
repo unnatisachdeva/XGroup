@@ -29,21 +29,21 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#0A0C10]/90 backdrop-blur-md border-b border-[#262B34] py-3 shadow-xl"
-          : "bg-gradient-to-b from-[#0A0C10]/80 via-[#0A0C10]/40 to-transparent py-5"
+          ? "bg-white/90 backdrop-blur-md border-b border-[#E6E6E6] py-3 shadow-xl"
+          : "bg-gradient-to-b from-white/80 via-white/40 to-transparent py-5"
       }`}
     >
       <div className="max-w-[1280px] mx-auto px-5 lg:px-10 flex items-center justify-between">
         {/* Brand Logo / Wordmark */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CC0000] to-[#990000] flex items-center justify-center text-[#0A0C10] font-black text-xl shadow-lg group-hover:scale-105 transition-transform duration-200">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CC0000] to-[#990000] flex items-center justify-center text-white font-black text-xl shadow-lg group-hover:scale-105 transition-transform duration-200">
             X
           </div>
           <div className="flex flex-col">
-            <span className="font-display font-extrabold text-lg tracking-tight text-[#F5F6F7] group-hover:text-[#CC0000] transition-colors">
+            <span className="font-display font-extrabold text-lg tracking-tight text-[#111111] group-hover:text-[#CC0000] transition-colors">
               THE X GROUP <span className="text-[#CC0000] text-xs align-super uppercase font-semibold">INC</span>
             </span>
-            <span className="text-[10px] font-medium tracking-widest text-[#A9AFB9] uppercase font-display">
+            <span className="text-[10px] font-medium tracking-widest text-[#4F4F4F] uppercase font-display">
               Asset-Based Carrier
             </span>
           </div>
@@ -58,7 +58,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 className={`relative font-display text-sm font-semibold transition-colors duration-200 py-1 ${
-                  isActive ? "text-[#CC0000]" : "text-[#A9AFB9] hover:text-[#F5F6F7]"
+                  isActive ? "text-[#CC0000]" : "text-[#4F4F4F] hover:text-[#111111]"
                 }`}
               >
                 {link.label}
@@ -78,7 +78,7 @@ export function Header() {
         <div className="hidden lg:flex items-center gap-4">
           <a
             href={`tel:${SITE_CONFIG.phone}`}
-            className="flex items-center gap-2 text-xs font-display font-semibold text-[#A9AFB9] hover:text-[#CC0000] transition-colors px-3 py-1.5 rounded-full border border-[#262B34] hover:border-[#CC0000]/40"
+            className="flex items-center gap-2 text-xs font-display font-semibold text-[#4F4F4F] hover:text-[#CC0000] transition-colors px-3 py-1.5 rounded-full border border-[#E6E6E6] hover:border-[#CC0000]/40"
           >
             <Phone className="w-3.5 h-3.5 text-[#CC0000]" />
             <span>24/7 Dispatch</span>
@@ -95,7 +95,7 @@ export function Header() {
           </Button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-[#191D25] border border-[#262B34] text-[#F5F6F7] hover:text-[#CC0000] transition-colors"
+            className="p-2 rounded-lg bg-white border border-[#E6E6E6] text-[#111111] hover:text-[#CC0000] transition-colors"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -111,7 +111,7 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[70px] z-40 bg-[#0A0C10]/98 backdrop-blur-xl border-b border-[#262B34] flex flex-col justify-between p-6 overflow-y-auto lg:hidden"
+            className="fixed inset-0 top-[70px] z-40 bg-white/98 backdrop-blur-xl border-b border-[#E6E6E6] flex flex-col justify-between p-6 overflow-y-auto lg:hidden"
           >
             <div className="flex flex-col gap-2">
               <span className="eyebrow-label mb-2">Navigation</span>
@@ -128,8 +128,8 @@ export function Header() {
                       href={link.href}
                       className={`block py-3 px-4 rounded-xl text-lg font-display font-bold transition-all ${
                         isActive
-                          ? "bg-[#191D25] text-[#CC0000] border border-[#CC0000]/30"
-                          : "text-[#F5F6F7] hover:bg-[#12151B] hover:text-[#CC0000]"
+                          ? "bg-[#FFF4F4] text-[#CC0000] border border-[#CC0000]/30"
+                          : "text-[#111111] hover:bg-[#F7F7F3] hover:text-[#CC0000]"
                       }`}
                     >
                       {link.label}
@@ -140,7 +140,7 @@ export function Header() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-[#262B34] flex flex-col gap-3">
-              <div className="flex items-center justify-between text-xs font-display text-[#A9AFB9] mb-2 px-1">
+              <div className="flex items-center justify-between text-xs font-display text-[#4F4F4F] mb-2 px-1">
                 <span>24/7 Operations Dispatch:</span>
                 <a href={`tel:${SITE_CONFIG.phone}`} className="text-[#CC0000] font-bold">
                   {SITE_CONFIG.displayPhone}

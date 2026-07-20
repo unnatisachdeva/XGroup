@@ -84,7 +84,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${inter.variable} h-full antialiased dark`}
+      className={`${archivo.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
         <script
@@ -92,7 +92,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganization) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#0A0C10] text-[#F5F6F7]">
+      <body className="min-h-full flex flex-col bg-[var(--color-bg-primary)] text-[var(--color-text-primary)]">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

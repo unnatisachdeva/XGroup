@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function AboutUsPage() {
   return (
-    <div className="flex flex-col w-full bg-[#08090C]">
+    <div className="flex flex-col w-full bg-[var(--color-bg-primary)]">
       {/* Full-bleed Hero Section matching xfreight.ca/about-us */}
       <section className="relative w-full min-h-[90vh] flex items-center justify-center pt-28 pb-16 px-5 lg:px-10 overflow-hidden">
         {/* Warehouse Background Photography */}
@@ -20,8 +20,8 @@ export default function AboutUsPage() {
           }}
         />
 
-        {/* Dark Hero Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#08090C]/95 via-[#08090C]/85 to-[#08090C]/95" />
+        {/* Hero Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/80" />
 
         <div className="relative z-10 max-w-[1280px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Heading */}
@@ -29,26 +29,26 @@ export default function AboutUsPage() {
             <span className="text-[#CC0000] font-display font-extrabold text-xs sm:text-sm uppercase tracking-[0.2em]">
               WHO WE ARE
             </span>
-            <h1 className="font-display font-black text-5xl sm:text-6xl lg:text-7xl text-[#FFFFFF] tracking-tight leading-none">
+            <h1 className="font-display font-black text-5xl sm:text-6xl lg:text-7xl text-white tracking-tight leading-none">
               About <span className="text-[#CC0000]">Us</span>
             </h1>
             <div className="w-12 h-1.5 bg-[#CC0000] mt-3 rounded-full" />
           </div>
 
-          {/* Right Column: Glassmorphism Overlay Card */}
-          <div className="lg:col-span-8 p-6 sm:p-10 lg:p-12 rounded-3xl bg-[#101216]/85 backdrop-blur-xl border border-[#242830] shadow-2xl flex flex-col gap-8">
+          {/* Right Column: Light card for readability */}
+          <div className="lg:col-span-8 p-6 sm:p-10 lg:p-12 rounded-3xl bg-white/95 backdrop-blur-xl border border-[#E6E6E6] shadow-2xl flex flex-col gap-8">
             {/* Main Header Statement */}
-            <h2 className="font-display font-bold text-xl sm:text-2xl lg:text-3xl text-[#FFFFFF] leading-snug tracking-tight border-b border-[#242830] pb-6">
+            <h2 className="font-display font-bold text-xl sm:text-2xl lg:text-3xl text-[#111111] leading-snug tracking-tight border-b border-[#E6E6E6] pb-6">
               Behind every successful logistics partnership is a relationship. A relationship built on{" "}
               <span className="text-[#CC0000]">trust, consistency</span> and reliable execution.
             </h2>
 
             {/* 2-Column Content Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 text-sm sm:text-base text-[#A1A5B0] leading-relaxed">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 text-sm sm:text-base text-[#4F4F4F] leading-relaxed">
               {/* Left Column Text */}
               <div className="flex flex-col gap-5">
                 <p>
-                  <strong className="text-[#FFFFFF] font-semibold">The X Group Inc.</strong> was built around a simple, timeless idea: showing up every day to do what we say we will do, leads to{" "}
+                  <strong className="text-[#111111] font-semibold">The X Group Inc.</strong> was built around a simple, timeless idea: showing up every day to do what we say we will do, leads to{" "}
                   <span className="text-[#CC0000] font-medium">long-term, win-win relationships</span>. For our clients, drivers, partner carriers and colleagues alike.
                 </p>
                 <p>

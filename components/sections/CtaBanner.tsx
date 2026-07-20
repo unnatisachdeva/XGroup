@@ -21,7 +21,7 @@ export function CtaBanner({
   buttonHref = "/get-a-quote",
 }: CtaBannerProps) {
   return (
-    <section className="relative w-full py-20 bg-[#0A0C10] overflow-hidden border-y border-[#262B34]">
+    <section className="relative w-full py-20 bg-[#F7F7F3] overflow-hidden border-y border-[#E6E6E6]">
       {/* Background photography overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20 filter grayscale"
@@ -30,7 +30,7 @@ export function CtaBanner({
             "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80')",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0A0C10] via-[#0A0C10]/90 to-[#0A0C10]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/90 to-white/95" />
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-5 lg:px-10 text-center">
         <motion.div
@@ -41,10 +41,10 @@ export function CtaBanner({
           className="max-w-3xl mx-auto flex flex-col items-center gap-5"
         >
           <span className="eyebrow-label">{eyebrow}</span>
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#F5F6F7] tracking-tight">
+          <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#111111] tracking-tight">
             {title}
           </h2>
-          <p className="text-[#A9AFB9] text-base sm:text-lg leading-relaxed max-w-xl">
+          <p className="text-[#4F4F4F] text-base sm:text-lg leading-relaxed max-w-xl">
             {subtitle}
           </p>
 
@@ -54,10 +54,10 @@ export function CtaBanner({
             </Button>
             <a
               href={`tel:${SITE_CONFIG.phone}`}
-              className="flex items-center gap-2 text-sm font-display font-semibold text-[#A9AFB9] hover:text-[#CC0000] transition-colors"
+              className="flex items-center gap-2 text-sm font-display font-semibold text-[#4F4F4F] hover:text-[#CC0000] transition-colors"
             >
               <Phone className="w-4 h-4 text-[#CC0000]" />
-              <span>or call dispatch 24/7 <strong className="text-[#F5F6F7]">{SITE_CONFIG.displayPhone}</strong></span>
+              <span>or call dispatch 24/7 <strong className="text-[#111111]">{SITE_CONFIG.displayPhone}</strong></span>
             </a>
           </div>
         </motion.div>

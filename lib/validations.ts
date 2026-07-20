@@ -9,10 +9,12 @@ export const quoteFormSchema = z.object({
   destination: z.string().min(2, "Destination location is required"),
   serviceType: z.enum(
     [
-      "Oilfield & Energy Transport",
-      "Mining & Bulk Hauling",
-      "Heavy-Haul & Rig Moves",
-      "Dedicated Capacity",
+      "Cross-Border Transportation",
+      "Dry Van & Refrigerated (Reefer) Transportation",
+      "Flatbed Shipping",
+      "Heavy Haul & Over Dimensional",
+      "Intermodal / Multimodal Transportation",
+      "Project Management & Logistics",
       "Other",
     ],
     { message: "Please select a service category" }
@@ -21,6 +23,7 @@ export const quoteFormSchema = z.object({
   weight: z.string().optional(),
   dimensions: z.string().optional(),
   pickupDate: z.string().optional(),
+  deliveryDate: z.string().optional(),
   notes: z.string().optional(),
   agreeToTerms: z.literal(true, {
     message: "You must agree to the Privacy Policy",

@@ -11,6 +11,7 @@ interface HeroProps {
   ctaPrimary?: { label: string; href: string };
   ctaSecondary?: { label: string; href: string };
   height?: "full" | "compact";
+  align?: "start" | "center";
 }
 
 export function Hero({
@@ -21,6 +22,7 @@ export function Hero({
   ctaPrimary,
   ctaSecondary,
   height = "compact",
+  align = "start",
 }: HeroProps) {
   const isFull = height === "full";
 
@@ -36,8 +38,8 @@ export function Hero({
         style={{ backgroundImage: `url(${backgroundImage})` }}
       />
       
-      {/* Dark Industrial Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0A0C10]/80 via-[#0A0C10]/75 to-[#0A0C10]" />
+      {/* Light editorial overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/75 to-white/90" />
       
       {/* Subtle Grid Accent Pattern Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#262B34_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
@@ -48,18 +50,24 @@ export function Hero({
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-3xl flex flex-col items-start gap-4"
+          className={"max-w-3xl flex flex-col gap-4 " + (align === "center" ? "items-center text-center mx-auto" : "items-start")}
         >
-          {/* Eyebrow */}
-          <span className="eyebrow-label px-3 py-1 rounded-md bg-[#CC0000]/10 border border-[#CC0000]/30 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-[#CC0000] animate-pulse" />
-            {eyebrow}
-          </span>
-
-          {/* Heading */}
-          <h1 className="font-display font-extrabold text-[#F5F6F7] text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight">
-            {title}
-          </h1>
+          {/* Eyebrow / Heading */}
+          {title ? (
+            <>
+              <span className="eyebrow-label px-3 py-1 rounded-md bg-[#CC0000]/10 border border-[#CC0000]/30 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-[#CC0000] animate-pulse" />
+                {eyebrow}
+              </span>
+              <h1 className="font-display font-extrabold text-[#F5F6F7] text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight">
+                {title}
+              </h1>
+            </>
+          ) : (
+            <h1 className="font-display font-extrabold text-[#F5F6F7] text-4xl sm:text-5xl lg:text-5xl leading-[1.08] tracking-tight whitespace-nowrap">
+              {eyebrow}
+            </h1>
+          )}
 
           {/* Subtitle */}
           <p className="text-[#A9AFB9] text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mt-1 font-normal">

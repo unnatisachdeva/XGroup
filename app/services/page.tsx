@@ -98,21 +98,20 @@ export default function ServicesPage() {
   return (
     <div className="flex flex-col w-full bg-[#08090C]">
       {/* Hero Section */}
-      <section className="relative w-full min-h-[50vh] flex items-center justify-center pt-32 pb-16 px-5 lg:px-10 overflow-hidden">
+      <section className="relative w-full min-h-[54vh] lg:min-h-[62vh] flex items-center justify-center pt-28 pb-14 px-5 lg:px-10 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=2000&q=80')",
+            backgroundImage: "url('/services.jpeg')",
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#08090C]/85 via-[#08090C]/75 to-[#08090C]" />
 
         <div className="relative z-10 max-w-[1280px] w-full mx-auto text-center flex flex-col items-center gap-4">
-          <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#FFFFFF] tracking-tight">
+          <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
             Our <span className="text-[#CC0000]">Services</span>
           </h1>
-          <p className="text-[#A1A5B0] text-lg sm:text-xl lg:text-2xl max-w-3xl font-normal leading-relaxed">
+          <p className="text-white/90 text-lg sm:text-xl lg:text-2xl max-w-3xl font-normal leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
             Comprehensive logistics solutions built for Western Canada&apos;s toughest environments and most demanding industries.
           </p>
         </div>

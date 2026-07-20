@@ -69,7 +69,7 @@ export default function Home() {
         title="Owned Trucks. Proven Ground."
         subtitle="Western Canada based trucking, serving Canada and the USA, from Laredo to Prudhoe Bay! Safely and reliably keeping your supply chain moving."
         ctaPrimary={{ label: "Request Service", href: "/get-a-quote" }}
-        ctaSecondary={{ label: "Join Our Fleet", href: "/join-our-fleet" }}
+        ctaSecondary={{ label: "Join Our Fleet", href: "/careers" }}
         backgroundImage="/mainphoto.jpeg"
       />
 
@@ -111,13 +111,10 @@ export default function Home() {
 
                 {/* Card Content */}
                 <div className="relative z-10 flex flex-col gap-2.5">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-2xl sm:text-3xl text-[#FFFFFF] group-hover:text-[#CC0000] transition-colors duration-300">
+                  <div className="flex items-start">
+                    <h3 className="font-display font-bold text-2xl sm:text-3xl text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] transition-colors duration-300">
                       {service.title}
                     </h3>
-                    <div className="w-10 h-10 rounded-full bg-[#16191E]/80 border border-[#242830] group-hover:border-[#CC0000] group-hover:bg-[#CC0000] text-[#FFFFFF] flex items-center justify-center transition-all duration-300 shrink-0">
-                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
-                    </div>
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#A1A5B0] max-w-xl leading-relaxed">

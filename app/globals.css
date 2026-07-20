@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  /* Base / neutrals (Black & Dark Slate) */
-  --color-bg-primary: #08090C;
-  --color-bg-secondary: #101216;
-  --color-bg-elevated: #16191E;
-  --color-border: #242830;
-  --color-border-subtle: #191C22;
+  /* Base / neutrals (Light canvas with black typography) */
+  --color-bg-primary: #F7F7F3;
+  --color-bg-secondary: #FFFFFF;
+  --color-bg-elevated: #FFFFFF;
+  --color-border: #E6E6E6;
+  --color-border-subtle: #EFEFEF;
 
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #A1A5B0;
-  --color-text-muted: #696E79;
-  --color-text-inverse: #08090C;
+  --color-text-primary: #111111;
+  --color-text-secondary: #4F4F4F;
+  --color-text-muted: #6B6B6B;
+  --color-text-inverse: #FFFFFF;
 
   /* Accent — X Freight Signature Red (#c00) */
   --color-accent: #CC0000;
   --color-accent-hover: #E60000;
-  --color-accent-muted: rgba(204, 0, 0, 0.15);
+  --color-accent-muted: rgba(204, 0, 0, 0.12);
 
   /* Secondary accent — Crisp Steel White */
-  --color-steel: #717784;
-  --color-steel-light: #9EA3AF;
+  --color-steel: #5F6672;
+  --color-steel-light: #8A919D;
 
   /* Status */
   --color-success: #22C55E;
@@ -34,7 +34,7 @@
   --radius-pill: 999px;
 
   /* Overlays */
-  --overlay-hero: linear-gradient(180deg, rgba(8,9,12,0.4) 0%, rgba(8,9,12,0.8) 60%, rgba(8,9,12,0.98) 100%);
+  --overlay-hero: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.8) 60%, rgba(255,255,255,0.96) 100%);
   --overlay-card-hover: rgba(204, 0, 0, 0.08);
 }
 
@@ -74,6 +74,42 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+}
+
+/* Global light-theme overrides for existing dark utility classes */
+.bg-\[\#08090C\], .bg-\[\#0A0C10\], .bg-\[\#101216\], .bg-\[\#12151B\], .bg-\[\#16191E\], .bg-\[\#191D25\], .bg-\[\#1C2028\], .bg-\[\#262B34\] {
+  background-color: var(--color-bg-primary) !important;
+}
+
+.bg-\[\#101216\] {
+  background-color: var(--color-bg-secondary) !important;
+}
+
+.bg-\[\#16191E\], .bg-\[\#191D25\] {
+  background-color: var(--color-bg-elevated) !important;
+}
+
+.text-\[\#FFFFFF\], .text-\[\#F5F6F7\] {
+  color: var(--color-text-primary) !important;
+}
+
+.text-\[\#A1A5B0\], .text-\[\#A9AFB9\], .text-\[\#6E7580\], .text-\[\#696E79\] {
+  color: var(--color-text-secondary) !important;
+}
+
+.border-\[\#242830\], .border-\[\#262B34\], .border-\[\#1C2028\], .border-\[\#191D25\] {
+  border-color: var(--color-border) !important;
+}
+
+.btn-secondary {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+.btn-secondary:hover {
+  color: var(--color-text-primary);
+  background-color: rgba(204, 0, 0, 0.08);
 }
 
 /* Custom Scrollbar */

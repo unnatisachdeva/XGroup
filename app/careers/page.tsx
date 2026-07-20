@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Hero } from "@/components/sections/Hero";
-import { CtaBanner } from "@/components/sections/CtaBanner";
 import { ArrowRight, MapPin, Briefcase } from "lucide-react";
+import { CareersAppForm } from "@/components/features/CareersAppForm";
+import JobCardWithForm from "@/components/features/JobCardWithForm";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -43,11 +44,11 @@ export default function CareersPage() {
       {/* Hero */}
       <Hero
         height="compact"
+        align="center"
         eyebrow="JOIN OUR TEAM"
-        title="Careers at The X Group Inc."
-        subtitle="We're growing our fleet — and looking for people who take ownership of the work as much as we do."
+        title=""
+        subtitle="We're growing our fleet and looking for people who take ownership of the work as much as we do."
         backgroundImage="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80"
-        ctaPrimary={{ label: "Join Our Fleet Form", href: "/join-our-fleet" }}
       />
 
       {/* Openings Grid */}
@@ -65,54 +66,34 @@ export default function CareersPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {JOBS.map((job) => (
-              <Link
-                key={job.slug}
-                href={`/careers/${job.slug}`}
-                className="group relative p-8 rounded-3xl bg-[#12151B] border border-[#262B34] hover:border-[#CC0000] hover:bg-[#191D25] transition-all duration-300 flex flex-col justify-between gap-6 shadow-xl hover:-translate-y-1"
-              >
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between border-b border-[#262B34] pb-4">
-                    <span className="font-display font-black text-3xl text-[#CC0000]">
-                      {job.num}
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-[#191D25] border border-[#262B34] text-[11px] font-display font-semibold text-[#A9AFB9]">
-                      {job.type}
-                    </span>
-                  </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-[1280px] w-full mx-auto">
+            <JobCardWithForm
+              title="Company Driver"
+              tagline="CANADA/US LONG HAUL"
+              slug="company-driver"
+              description="Join our fleet of professional drivers operating state-of-the-art equipment across Canada and the United States. We offer stable employment with excellent benefits and competitive compensation."
+              requirements={[
+                "Minimum 6 months of Class 1/AZ driving experience",
+                "Minimum 6 months of Commercial Flat Deck/Open Deck experience preferred",
+                "Minimum 6 months of Load Securement experience preferred",
+              ]}
+            />
 
-                  <h3 className="font-display font-extrabold text-2xl text-[#F5F6F7] group-hover:text-[#CC0000] transition-colors">
-                    {job.title}
-                  </h3>
-
-                  <p className="text-sm text-[#A9AFB9] leading-relaxed">
-                    {job.desc}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-[#262B34] flex items-center justify-between text-xs">
-                  <span className="text-[#6E7580] flex items-center gap-1.5 font-medium">
-                    <MapPin className="w-3.5 h-3.5 text-[#CC0000]" />
-                    {job.location}
-                  </span>
-                  <span className="btn-text-arrow text-xs">
-                    View Role & Apply →
-                  </span>
-                </div>
-              </Link>
-            ))}
+            <JobCardWithForm
+              title="Owner Operator"
+              tagline="CANADA/US LONG HAUL"
+              slug="owner-operator"
+              description="Partner with us and maintain your independence while benefiting from our extensive network, competitive rates, and comprehensive support services."
+              requirements={[
+                "Minimum 1 year of Class 1/AZ driving experience",
+                "Minimum 6 months of Commercial Flat Deck/Open Deck experience preferred",
+                "Minimum 6 months of Load Securement experience preferred",
+              ]}
+            />
           </div>
         </div>
       </section>
 
-      <CtaBanner
-        eyebrow="EQUIPMENT OWNERS"
-        title="Are You an Owner-Operator?"
-        subtitle="Plug your equipment into consistent oilfield and mining haul routes with direct dispatch."
-        buttonLabel="Submit Fleet Application"
-        buttonHref="/join-our-fleet"
-      />
     </div>
   );
 }

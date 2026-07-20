@@ -1,101 +1,136 @@
 import { Metadata } from "next";
-import { Hero } from "@/components/sections/Hero";
-import { SITE_CONFIG } from "@/lib/constants";
-import { ShieldCheck, FileText, Lock } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description:
-    "Privacy policy and PIPEDA compliance guidelines for The X Group Inc. website visitors and fleet applicants.",
+  description: "Privacy policy for X Freight Group Inc. website visitors and communication services.",
 };
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = "July 18, 2026";
-
   return (
-    <div className="flex flex-col w-full">
-      {/* Hero */}
-      <Hero
-        height="compact"
-        eyebrow="LEGAL & COMPLIANCE"
-        title="Privacy Policy"
-        subtitle="How The X Group Inc. collects, uses, and protects personal and commercial operational data."
-        backgroundImage="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=2000&q=80"
-      />
-
-      {/* Main Legal Content */}
-      <section className="py-20 bg-[#0A0C10] text-[#A9AFB9]">
-        <div className="max-w-4xl mx-auto px-5 lg:px-10 flex flex-col gap-10">
-          <div className="p-4 rounded-xl bg-[#12151B] border border-[#262B34] flex items-center justify-between text-xs text-[#6E7580]">
-            <span className="flex items-center gap-2">
-              <Lock className="w-4 h-4 text-[#CC0000]" />
-              PIPEDA Aligned Compliance Statement
-            </span>
-            <span>Last Updated: {lastUpdated}</span>
-          </div>
-
-          <div className="flex flex-col gap-6 text-sm sm:text-base leading-relaxed">
-            <h2 className="font-display font-extrabold text-2xl text-[#F5F6F7] border-l-4 border-[#CC0000] pl-3">
-              1. Introduction & Scope
-            </h2>
-            <p>
-              {SITE_CONFIG.legalName} (&quot;The X Group Inc.&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting the privacy and security of personal and business information provided to us by website users, shippers, drivers, and owner-operator applicants. This Privacy Policy outlines our practices pursuant to the Personal Information Protection and Electronic Documents Act (PIPEDA) and applicable Canadian provincial privacy laws.
+    <main className="flex min-h-screen w-full flex-col bg-white">
+      <section className="py-16 text-[#334155]">
+        <div className="mx-auto flex max-w-4xl flex-col gap-8 px-5 lg:px-10">
+          <header className="mt-8 flex flex-col items-center space-y-3 text-center">
+            <h1 className="font-display text-3xl font-extrabold text-[#111827] sm:text-4xl">
+              Privacy Policy
+            </h1>
+            <p className="text-sm font-medium uppercase tracking-[0.24em] text-[#CC0000]">
+              Last Updated: July 20, 2026
             </p>
-
-            <h2 className="font-display font-extrabold text-2xl text-[#F5F6F7] border-l-4 border-[#CC0000] pl-3 mt-4">
-              2. Information We Collect
-            </h2>
-            <p>
-              We collect information provided directly by you through interactive website forms, service requests, and career applications, including:
+            <p className="max-w-3xl text-base leading-7 text-[#475569]">
+              How we collect, use, and protect your information when you visit our website or contact us.
             </p>
-            <ul className="list-disc pl-6 flex flex-col gap-2">
-              <li>Contact details: Name, email address, phone number, company name.</li>
-              <li>Freight quote details: Origin, destination, commodity descriptions, equipment needs, dimensions, weight specs.</li>
-              <li>Fleet & Driver application details: Operating license numbers, National Safety Code (NSC) or MC identifiers, equipment configurations, operating region selections, and work histories.</li>
-              <li>Technical usage data: Anonymous IP addresses, browser types, device identifiers, and page navigation metrics collected via standard web analytics.</li>
-            </ul>
+          </header>
 
-            <h2 className="font-display font-extrabold text-2xl text-[#F5F6F7] border-l-4 border-[#CC0000] pl-3 mt-4">
-              3. Purpose & Use of Data
-            </h2>
-            <p>
-              Information collected on this site is strictly used for legitimate business operations:
-            </p>
-            <ul className="list-disc pl-6 flex flex-col gap-2">
-              <li>Processing freight rate quotes, evaluating heavy-haul permits, and dispatching equipment.</li>
-              <li>Evaluating driver and owner-operator qualifications, safety abstracts, and fleet compatibility.</li>
-              <li>Communicating operational updates, project schedules, and safety advisories.</li>
-              <li>Maintaining legal, safety, and regulatory records mandated by transport authorities.</li>
-            </ul>
-
-            <h2 className="font-display font-extrabold text-2xl text-[#F5F6F7] border-l-4 border-[#CC0000] pl-3 mt-4">
-              4. Data Protection & Third-Party Disclosure
-            </h2>
-            <p>
-              We do not sell, rent, or trade your personal information. Data may be shared with trusted third-party service providers (such as secure cloud hosting, email delivery engines, and CRM systems) solely to facilitate our operational services. All third parties are legally obligated to maintain equal or greater data security standards.
-            </p>
-
-            <h2 className="font-display font-extrabold text-2xl text-[#F5F6F7] border-l-4 border-[#CC0000] pl-3 mt-4">
-              5. Your Rights & Privacy Inquiries
-            </h2>
-            <p>
-              Under Canadian privacy legislation, you have the right to access, update, or request deletion of personal information held by us, subject to statutory retention requirements for transport logs and tax compliance.
-            </p>
-
-            <div className="p-6 rounded-2xl bg-[#12151B] border border-[#262B34] mt-6 flex flex-col gap-2">
-              <h3 className="font-display font-bold text-base text-[#F5F6F7]">
-                Privacy Officer Contact
-              </h3>
-              <p className="text-xs text-[#A9AFB9]">
-                For questions or requests regarding your data, contact our Privacy Compliance Officer at:
+          <article className="space-y-6 text-sm leading-7 sm:text-base">
+            <section>
+              <h2 className="font-display text-xl font-semibold text-[#111827]">1. Introduction</h2>
+              <p className="mt-2">
+                X Freight Group Inc. (“we,” “us,” or “our”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and disclose personal information when you use our website https://xfreight.ca/ and our communication services, including SMS.
               </p>
-              <div className="text-xs text-[#CC0000] font-semibold mt-1">
-                Email: {SITE_CONFIG.email} | Phone: {SITE_CONFIG.displayPhone}
+            </section>
+
+            <section>
+              <h2 className="font-display text-xl font-semibold text-[#111827]">2. Information We Collect</h2>
+              <p className="mt-2">We collect information you provide directly to us, including:</p>
+              <ul className="mt-3 list-disc space-y-2 pl-6">
+                <li>Name, email address, and physical address.</li>
+                <li>
+                  <strong>Phone Number:</strong> Specifically collected for the purpose of business communication and SMS updates.
+                </li>
+                <li>
+                  <strong>Log Data:</strong> IP addresses and browser types collected automatically via our website.
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="font-display text-xl font-semibold text-[#111827]">3. Use of Information</h2>
+              <p className="mt-2">
+                We use your information to provide our services, respond to inquiries, and send administrative or marketing communications (where consented).
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-display text-xl font-semibold text-[#111827]">4. SMS Communication &amp; Privacy</h2>
+              <ul className="mt-3 list-disc space-y-2 pl-6">
+                <li>
+                  <strong>No Third-Party Sharing:</strong> Mobile information will not be shared with third parties/affiliates for marketing/promotional purposes.
+                </li>
+                <li>
+                  <strong>Exclusion:</strong> All the above categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="font-display text-xl font-semibold text-[#111827]">5. Data Retention</h2>
+              <p className="mt-2">
+                We retain your personal information only as long as necessary to fulfill business purposes or as required by law in Alberta and applicable US jurisdictions.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-display text-xl font-semibold text-[#111827]">6. Your Rights</h2>
+              <p className="mt-2">
+                Depending on your location (Canada or the US), you may have the right to access, correct, or delete your personal data. To exercise these rights, contact us at <a href="mailto:info@xfreight.ca" className="text-[#CC0000] underline">info@xfreight.ca</a>.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-display text-xl font-semibold text-[#111827]">7. AI-Generated Content</h2>
+              <p className="mt-2">
+                Please note that some images and graphical elements used on this website may be AI-generated to provide an enhanced user experience. These images are for illustrative purposes and do not infringe on any privacy rights.
+              </p>
+            </section>
+
+            <section className="pt-6">
+              <div className="mb-4 h-px w-full bg-[#CC0000]" />
+              <h2 className="font-display text-xl font-semibold text-[#111827]">SMS Terms &amp; Conditions</h2>
+
+              <div className="mt-4 space-y-4">
+                <div>
+                  <h3 className="font-semibold text-[#111827]">1. Program Description</h3>
+                  <p className="mt-1">
+                    By providing your phone number and opting in through our website forms, you consent to receive SMS messages from X Freight Group Inc. regarding sales inquiries, project updates, and freight coordination.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-[#111827]">2. Consent &amp; Opt-In</h3>
+                  <p className="mt-1">
+                    Consent to receive automated marketing or operational text messages is not a condition of any purchase. You may opt-in by checking the consent box on our forms.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-[#111827]">3. Message Frequency</h3>
+                  <p className="mt-1">Message frequency varies based on your interaction with our team.</p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-[#111827]">4. Cost</h3>
+                  <p className="mt-1">Message and data rates may apply. Check with your mobile carrier for details.</p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-[#111827]">5. How to Opt-Out</h3>
+                  <p className="mt-1">
+                    To stop receiving text messages from X Freight Group Inc., reply <strong>STOP</strong> to any message we send.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-[#111827]">6. Support</h3>
+                  <p className="mt-1">
+                    For help, reply <strong>HELP</strong> to any message or email <a href="mailto:info@xfreight.ca" className="text-[#CC0000] underline">info@xfreight.ca</a>.
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
+            </section>
+          </article>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
