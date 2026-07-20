@@ -89,8 +89,6 @@ export function Hero({
         </motion.div>
       </div>
 
-      {/* Bottom Accent Glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#CC0000]/40 to-transparent" />
     </section>
   );
 }

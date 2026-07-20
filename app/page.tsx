@@ -67,10 +67,10 @@ export default function Home() {
         height="full"
         eyebrow="ASSET-BASED FLEET — OILFIELD · MINING · ENERGY"
         title="Owned Trucks. Proven Ground."
-        subtitle="The X Group Inc. runs its own equipment and a trusted owner-operator network to move rigs, bulk material, and heavy freight across Western Canada — on our schedule, not someone else's."
+        subtitle="Western Canada based trucking, serving Canada and the USA, from Laredo to Prudhoe Bay! Safely and reliably keeping your supply chain moving."
         ctaPrimary={{ label: "Request Service", href: "/get-a-quote" }}
         ctaSecondary={{ label: "Join Our Fleet", href: "/join-our-fleet" }}
-        backgroundImage="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=2000&q=80"
+        backgroundImage="/mainphoto.jpeg"
       />
 
       {/* Services Showcase Section (Directly Below Hero Banner) */}
@@ -126,64 +126,6 @@ export default function Home() {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Asset-Based Section */}
-      <section className="py-20 bg-[#101216] border-b border-[#242830] relative">
-        <div className="max-w-[1280px] mx-auto px-5 lg:px-10">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-[#CC0000] font-display font-extrabold text-xs uppercase tracking-[0.2em] mb-2 block">
-              WHY IT MATTERS
-            </span>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#FFFFFF] tracking-tight">
-              We Own What We Run
-            </h2>
-            <p className="text-[#A1A5B0] text-base mt-3">
-              When you hire The X Group Inc., you deal directly with the asset owner. No middleman broker guessing truck availability.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="p-8 rounded-2xl bg-[#16191E] border border-[#242830] hover:border-[#CC0000]/50 transition-all flex flex-col gap-4 shadow-xl">
-              <div className="w-12 h-12 rounded-xl bg-[#CC0000]/10 border border-[#CC0000]/30 flex items-center justify-center text-[#CC0000]">
-                <Truck className="w-6 h-6" />
-              </div>
-              <h3 className="font-display font-bold text-xl text-[#FFFFFF]">
-                In-House Equipment
-              </h3>
-              <p className="text-sm text-[#A1A5B0] leading-relaxed">
-                Our own tractors, specialized winch units, lowboys, and end dumps — maintained under strict scheduled in-house inspection standards.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="p-8 rounded-2xl bg-[#16191E] border border-[#242830] hover:border-[#CC0000]/50 transition-all flex flex-col gap-4 shadow-xl">
-              <div className="w-12 h-12 rounded-xl bg-[#CC0000]/10 border border-[#CC0000]/30 flex items-center justify-center text-[#CC0000]">
-                <Phone className="w-6 h-6" />
-              </div>
-              <h3 className="font-display font-bold text-xl text-[#FFFFFF]">
-                Direct Dispatch 24/7
-              </h3>
-              <p className="text-sm text-[#A1A5B0] leading-relaxed">
-                One phone call reaches the operations team actually controlling the iron on the ground. Clear communication, no delays.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="p-8 rounded-2xl bg-[#16191E] border border-[#242830] hover:border-[#CC0000]/50 transition-all flex flex-col gap-4 shadow-xl">
-              <div className="w-12 h-12 rounded-xl bg-[#CC0000]/10 border border-[#CC0000]/30 flex items-center justify-center text-[#CC0000]">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="font-display font-bold text-xl text-[#FFFFFF]">
-                Safety-First Operations
-              </h3>
-              <p className="text-sm text-[#A1A5B0] leading-relaxed">
-                Actively pursuing COR and ISNetworld certification alongside rigorous pre-trip and post-trip equipment readiness standards.
-              </p>
-            </div>
           </div>
         </div>
       </section>
