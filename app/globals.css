@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  /* Base / neutrals (Black & Dark Slate) */
+  --color-bg-primary: #08090C;
+  --color-bg-secondary: #101216;
+  --color-bg-elevated: #16191E;
+  --color-border: #242830;
+  --color-border-subtle: #191C22;
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A1A5B0;
+  --color-text-muted: #696E79;
+  --color-text-inverse: #08090C;
+
+  /* Accent — X Freight Signature Red (#c00) */
+  --color-accent: #CC0000;
+  --color-accent-hover: #E60000;
+  --color-accent-muted: rgba(204, 0, 0, 0.15);
+
+  /* Secondary accent — Crisp Steel White */
+  --color-steel: #717784;
+  --color-steel-light: #9EA3AF;
+
+  /* Status */
+  --color-success: #22C55E;
+  --color-error: #EF4444;
+
+  /* Layout & Radii */
+  --container-max: 1280px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Overlays */
+  --overlay-hero: linear-gradient(180deg, rgba(8,9,12,0.4) 0%, rgba(8,9,12,0.8) 60%, rgba(8,9,12,0.98) 100%);
+  --overlay-card-hover: rgba(204, 0, 0, 0.08);
+}
+
+@theme {
+  --color-bg-primary: var(--color-bg-primary);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-border: var(--color-border);
+  --color-border-subtle: var(--color-border-subtle);
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-muted: var(--color-accent-muted);
+
+  --color-steel: var(--color-steel);
+  --color-steel-light: var(--color-steel-light);
+
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-steel);
+}
+
+/* Button Classes */
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-text-inverse);
+  font-family: var(--font-display);
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  transition: all 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(204, 0, 0, 0.35);
+}
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(204, 0, 0, 0.5);
+}
+
+.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-display);
+  font-weight: 700;
+  padding: 13px 27px;
+  border-radius: var(--radius-pill);
+  transition: all 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+.btn-secondary:hover {
+  border-color: var(--color-accent);
+  background-color: rgba(204, 0, 0, 0.1);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-text-arrow {
+  color: var(--color-accent);
+  font-weight: 600;
+  font-family: var(--font-display);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 160ms ease;
+  cursor: pointer;
+}
+.btn-text-arrow:hover {
+  color: var(--color-accent-hover);
+}
+.btn-text-arrow svg {
+  transition: transform 160ms ease;
+}
+.btn-text-arrow:hover svg {
+  transform: translateX(4px);
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(18, 21, 27, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+}
+
+.eyebrow-label {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
