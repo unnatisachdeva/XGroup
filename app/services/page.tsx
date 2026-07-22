@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Fuel, Layers, Maximize2, Snowflake, Truck } from "lucide-react";
+import { ArrowRight, Construction, Container, Pickaxe, Route, Truck } from "lucide-react";
 import type { ElementType } from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -36,7 +36,7 @@ const SERVICES_LIST: ServiceData[] = [
     body: "We embrace the pace and pressure of Canada’s energy sector. Our oilfield logistics services support drilling, completions, and production operations. We move pipe, frac sand, rig mats, and heavy equipment with the responsiveness required in active fields. Our team understands site requirements, safety standards, and tight timelines, ensuring your freight arrives when and where it’s needed—without disruption to operations.",
     whoItsFor:
       "oil & gas companies, drilling contractors, fracking companies, well service providers, energy producers, pipeline contractors, field operations teams",
-    icon: Fuel,
+    icon: Pickaxe,
   },
   {
     id: "iceroads",
@@ -46,7 +46,7 @@ const SERVICES_LIST: ServiceData[] = [
     body: "We specialize in moving critical freight into remote northern regions via ice roads. From equipment and fuel to essential supplies and extra parts, our team plans and executes shipments in some of the harshest conditions in North America. With experienced operators and a strong focus on safety and timing, we ensure your freight reaches isolated job sites during narrow winter access windows.",
     whoItsFor:
       "mining companies, northern construction projects, remote communities, energy exploration companies, government projects, infrastructure developers",
-    icon: Snowflake,
+    icon: Route,
   },
   {
     id: "aggregate",
@@ -56,7 +56,7 @@ const SERVICES_LIST: ServiceData[] = [
     body: "High-volume hauling with scale and efficiency. Our aggregate division handles sand, gravel, and bulk materials across Western Canada with a large fleet of dump trucks and dependable turnaround times.",
     whoItsFor:
       "construction companies, road builders, concrete suppliers, asphalt plants, infrastructure contractors, excavation companies, municipal projects",
-    icon: Layers,
+    icon: Construction,
   },
   {
     id: "heavyhaul",
@@ -66,7 +66,7 @@ const SERVICES_LIST: ServiceData[] = [
     body: "We manage complex heavy haul and over-dimensional freight from start to finish. From multi-axle configurations to specialized trailers, we handle permits, routing, and pilot escorts to ensure compliance and safe delivery. Whether moving large industrial components or oversized equipment, we bring the planning and execution required to move challenging freight without delays.",
     whoItsFor:
       "industrial manufacturers, mining operations, oil & gas companies, power generation projects, equipment dealers, engineering firms, construction contractors",
-    icon: Maximize2,
+    icon: Container,
   },
 ];
 
@@ -88,7 +88,7 @@ export default function ServicesPage() {
       {/* Hero Section */}
       <section className="relative w-full min-h-[54vh] lg:min-h-[62vh] flex items-center justify-center pt-28 pb-14 px-5 lg:px-10 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-[100%] bg-no-repeat"
           style={{
             backgroundImage: "url('/services.jpeg')",
           }}

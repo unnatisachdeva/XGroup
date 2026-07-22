@@ -169,7 +169,7 @@ export default function Home() {
             </div>
 
             <div className="mt-8 flex justify-center gap-2.5" aria-label="Service carousel navigation">
-              {HOME_SERVICES.map((service, index) => (
+              {HOME_SERVICES.slice(0, 3).map((service, index) => (
                 <button
                   key={service.id}
                   type="button"
