@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy policy for X Freight Group Inc. website visitors and communication services.",
+  description: "Privacy policy for The X Group Inc. website visitors and communication services.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -26,7 +26,7 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="font-display text-xl font-semibold text-[#111827]">1. Introduction</h2>
               <p className="mt-2">
-                X Freight Group Inc. (“we,” “us,” or “our”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and disclose personal information when you use our website https://xfreight.ca/ and our communication services, including SMS.
+                The X Group Inc. (“we,” “us,” or “our”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and disclose personal information when you use our website https://thexgroup.ca/ and our communication services, including SMS.
               </p>
             </section>
 
@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="font-display text-xl font-semibold text-[#111827]">6. Your Rights</h2>
               <p className="mt-2">
-                Depending on your location (Canada or the US), you may have the right to access, correct, or delete your personal data. To exercise these rights, contact us at <a href="mailto:info@xfreight.ca" className="text-[#CC0000] underline">info@xfreight.ca</a>.
+                Depending on your location (Canada or the US), you may have the right to access, correct, or delete your personal data. To exercise these rights, contact us at <a href="mailto:info@thexgroup.ca" className="text-[#CC0000] underline">info@thexgroup.ca</a>.
               </p>
             </section>
 
@@ -92,7 +92,7 @@ export default function PrivacyPolicyPage() {
                 <div>
                   <h3 className="font-semibold text-[#111827]">1. Program Description</h3>
                   <p className="mt-1">
-                    By providing your phone number and opting in through our website forms, you consent to receive SMS messages from X Freight Group Inc. regarding sales inquiries, project updates, and freight coordination.
+                    By providing your phone number and opting in through our website forms, you consent to receive SMS messages from X Group Inc. regarding sales inquiries, project updates, and freight coordination.
                   </p>
                 </div>
 
@@ -116,14 +116,14 @@ export default function PrivacyPolicyPage() {
                 <div>
                   <h3 className="font-semibold text-[#111827]">5. How to Opt-Out</h3>
                   <p className="mt-1">
-                    To stop receiving text messages from X Freight Group Inc., reply <strong>STOP</strong> to any message we send.
+                    To stop receiving text messages from X Group Inc., reply <strong>STOP</strong> to any message we send.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-semibold text-[#111827]">6. Support</h3>
                   <p className="mt-1">
-                    For help, reply <strong>HELP</strong> to any message or email <a href="mailto:info@xfreight.ca" className="text-[#CC0000] underline">info@xfreight.ca</a>.
+                    For help, reply <strong>HELP</strong> to any message or email <a href="mailto:info@thexgroup.ca" className="text-[#CC0000] underline">info@thexgroup.ca</a>.
                   </p>
                 </div>
               </div>
