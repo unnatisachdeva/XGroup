@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <main className="flex min-h-screen w-full flex-col bg-white">
-      <section className="py-16 text-[#334155]">
+      <section className="pb-16 pt-28 text-[#334155]">
         <div className="mx-auto flex max-w-4xl flex-col gap-8 px-5 lg:px-10">
           <header className="mt-8 flex flex-col items-center space-y-3 text-center">
             <h1 className="font-display text-3xl font-extrabold text-[#111827] sm:text-4xl">

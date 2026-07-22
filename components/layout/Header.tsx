@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -35,17 +36,16 @@ export function Header() {
     >
       <div className="max-w-[1280px] mx-auto px-5 lg:px-10 flex items-center justify-between">
         {/* Brand Logo / Wordmark */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CC0000] to-[#990000] flex items-center justify-center text-white font-black text-xl shadow-lg group-hover:scale-105 transition-transform duration-200">
-            X
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display font-extrabold text-lg tracking-tight text-[#111111] group-hover:text-[#CC0000] transition-colors">
-              THE X GROUP <span className="text-[#CC0000] text-xs align-super uppercase font-semibold">INC</span>
-            </span>
-            <span className="text-[10px] font-medium tracking-widest text-[#4F4F4F] uppercase font-display">
-              Asset-Based Carrier
-            </span>
+        <Link href="/" className="group flex items-center" aria-label="The X Group Inc. home">
+          <div className="relative h-18 w-52 overflow-visible transition-transform duration-200 group-hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt="The X Group Inc. logo"
+              fill
+              className="object-contain"
+              sizes="208px"
+              priority
+            />
           </div>
         </Link>
 

@@ -1,9 +1,7 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Hero } from "@/components/sections/Hero";
-import { ArrowRight, MapPin, Briefcase } from "lucide-react";
-import { CareersAppForm } from "@/components/features/CareersAppForm";
-import JobCardWithForm from "@/components/features/JobCardWithForm";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -11,30 +9,30 @@ export const metadata: Metadata = {
     "Join The X Group Inc.'s growing fleet. Openings for Drivers, Owner-Operators, and Operations across Western Canada.",
 };
 
-const JOBS = [
+const CAREER_BLOCKS = [
   {
-    num: "01",
-    slug: "drivers",
-    title: "Company Drivers",
-    location: "Western Canada",
-    type: "Full-Time",
-    desc: "Run oilfield, mining, and heavy-haul freight across Western Canada with a company that owns its equipment and backs its drivers.",
+    tagline: "CANADA/US LONG HAUL",
+    title: "Company Driver",
+    description:
+      "Join our fleet of professional drivers operating state-of-the-art equipment across Canada and the United States. We offer stable employment with excellent benefits and competitive compensation.",
+    requirements: [
+      "Minimum 6 months of Class 1/AZ driving experience",
+      "Minimum 6 months of Commercial Flat Deck/Open Deck experience preferred",
+      "Minimum 6 months of Load Securement experience preferred",
+    ],
+    href: "/careers/company-driver",
   },
   {
-    num: "02",
-    slug: "owner-operators",
-    title: "Owner-Operators",
-    location: "Western Canada",
-    type: "Full-Time / Contract",
-    desc: "Bring your equipment into a dedicated fleet with consistent freight, direct dispatch, and no brokered middlemen.",
-  },
-  {
-    num: "03",
-    slug: "operations",
-    title: "Operations & Dispatch",
-    location: "Western Canada",
-    type: "Full-Time",
-    desc: "Coordinate dispatch, equipment readiness, and site logistics to keep our fleet moving without downtime.",
+    tagline: "CANADA/US LONG HAUL",
+    title: "Owner Operator",
+    description:
+      "Partner with us and maintain your independence while benefiting from our extensive network, competitive rates, and comprehensive support services.",
+    requirements: [
+      "Minimum 1 year of Class 1/AZ driving experience",
+      "Minimum 6 months of Commercial Flat Deck/Open Deck experience preferred",
+      "Minimum 6 months of Load Securement experience preferred",
+    ],
+    href: "/careers/owner-operator",
   },
 ];
 
@@ -48,47 +46,82 @@ export default function CareersPage() {
         eyebrow="JOIN OUR TEAM"
         title=""
         subtitle="We're growing our fleet and looking for people who take ownership of the work as much as we do."
-        backgroundImage="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80"
+        backgroundImage="/join.png"
       />
 
-      {/* Openings Grid */}
-      <section className="py-20 bg-[#0A0C10]">
-        <div className="max-w-[1280px] mx-auto px-5 lg:px-10">
-          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
-            <div>
-              <span className="eyebrow-label mb-2">CURRENT OPENINGS</span>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#F5F6F7] tracking-tight">
-                Current Opportunities
-              </h2>
-            </div>
-            <p className="text-sm text-[#A9AFB9] max-w-md">
-              Select a position to view responsibilities, qualification standards, and submit your application.
-            </p>
+      {/* Career Opportunities */}
+      <section className="bg-[#CC0000]">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="relative min-h-[360px] overflow-hidden bg-[#F7F7F3] lg:min-h-[520px]">
+            <Image
+              src="/driver.jpg"
+              alt="Company Driver"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              priority
+            />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-[1280px] w-full mx-auto">
-            <JobCardWithForm
-              title="Company Driver"
-              tagline="CANADA/US LONG HAUL"
-              slug="company-driver"
-              description="Join our fleet of professional drivers operating state-of-the-art equipment across Canada and the United States. We offer stable employment with excellent benefits and competitive compensation."
-              requirements={[
-                "Minimum 6 months of Class 1/AZ driving experience",
-                "Minimum 6 months of Commercial Flat Deck/Open Deck experience preferred",
-                "Minimum 6 months of Load Securement experience preferred",
-              ]}
-            />
+          <article className="flex min-h-[360px] items-center bg-[#CC0000] px-8 py-16 sm:px-14 lg:min-h-[520px] lg:px-20">
+            <div className="max-w-xl text-white">
+              <span className="font-display text-sm font-extrabold uppercase tracking-[0.2em] text-white/80">
+                {CAREER_BLOCKS[0].tagline}
+              </span>
+              <h2 className="mt-3 font-display text-4xl font-black tracking-tight sm:text-5xl">
+                {CAREER_BLOCKS[0].title}
+              </h2>
+              <p className="mt-5 text-base leading-8 text-white/90">
+                {CAREER_BLOCKS[0].description}
+              </p>
+              <h3 className="mt-7 font-display text-lg font-extrabold">Requirements:</h3>
+              <ul className="mt-3 space-y-2 text-sm leading-7 text-white/90">
+                {CAREER_BLOCKS[0].requirements.map((requirement) => (
+                  <li key={requirement}>{requirement}</li>
+                ))}
+              </ul>
+              <Link
+                href={CAREER_BLOCKS[0].href}
+                className="mt-8 inline-flex rounded-full bg-white px-7 py-3 font-display text-sm font-bold text-[#CC0000] transition-colors hover:bg-[#F7F7F3]"
+              >
+                Apply Now
+              </Link>
+            </div>
+          </article>
 
-            <JobCardWithForm
-              title="Owner Operator"
-              tagline="CANADA/US LONG HAUL"
-              slug="owner-operator"
-              description="Partner with us and maintain your independence while benefiting from our extensive network, competitive rates, and comprehensive support services."
-              requirements={[
-                "Minimum 1 year of Class 1/AZ driving experience",
-                "Minimum 6 months of Commercial Flat Deck/Open Deck experience preferred",
-                "Minimum 6 months of Load Securement experience preferred",
-              ]}
+          <article className="flex min-h-[360px] items-center bg-[#CC0000] px-8 py-16 sm:px-14 lg:min-h-[520px] lg:px-20">
+            <div className="max-w-xl text-white">
+              <span className="font-display text-sm font-extrabold uppercase tracking-[0.2em] text-white/80">
+                {CAREER_BLOCKS[1].tagline}
+              </span>
+              <h2 className="mt-3 font-display text-4xl font-black tracking-tight sm:text-5xl">
+                {CAREER_BLOCKS[1].title}
+              </h2>
+              <p className="mt-5 text-base leading-8 text-white/90">
+                {CAREER_BLOCKS[1].description}
+              </p>
+              <h3 className="mt-7 font-display text-lg font-extrabold">Requirements:</h3>
+              <ul className="mt-3 space-y-2 text-sm leading-7 text-white/90">
+                {CAREER_BLOCKS[1].requirements.map((requirement) => (
+                  <li key={requirement}>{requirement}</li>
+                ))}
+              </ul>
+              <Link
+                href={CAREER_BLOCKS[1].href}
+                className="mt-8 inline-flex rounded-full bg-white px-7 py-3 font-display text-sm font-bold text-[#CC0000] transition-colors hover:bg-[#F7F7F3]"
+              >
+                Apply Now
+              </Link>
+            </div>
+          </article>
+
+          <div className="relative min-h-[360px] overflow-hidden bg-[#F7F7F3] lg:min-h-[520px]">
+            <Image
+              src="/ownerop.jpg"
+              alt="Owner Operator"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </div>
         </div>

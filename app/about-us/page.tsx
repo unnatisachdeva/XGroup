@@ -21,7 +21,7 @@ export default function AboutUsPage() {
         />
 
         {/* Hero Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/35 via-white/20 to-white/35" />
 
         <div className="relative z-10 max-w-[1280px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Heading */}
@@ -29,7 +29,7 @@ export default function AboutUsPage() {
             <span className="text-[#CC0000] font-display font-extrabold text-xs sm:text-sm uppercase tracking-[0.2em]">
               WHO WE ARE
             </span>
-            <h1 className="font-display font-black text-5xl sm:text-6xl lg:text-7xl text-white tracking-tight leading-none">
+            <h1 className="font-display font-black text-5xl sm:text-6xl lg:text-7xl text-[#111111] tracking-tight leading-none">
               About <span className="text-[#CC0000]">Us</span>
             </h1>
             <div className="w-12 h-1.5 bg-[#CC0000] mt-3 rounded-full" />
