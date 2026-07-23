@@ -4,11 +4,11 @@ export const SITE_CONFIG = {
   tagline: "Owned Trucks. Proven Ground.",
   description:
     "Asset-based trucking fleet serving Western Canada's oilfield, mining, and energy sectors with owned equipment, dedicated capacity, and direct dispatch.",
-  phone: "780-555-0199",
-  displayPhone: "(780) 555-0199",
-  email: "dispatch@thexgroup.ca",
-  address: "Edmonton, Alberta, Canada",
-  parentCompany: "X Freight Group",
+  phone: "(587) 693-1551",
+  displayPhone: "(587) 693-1551",
+  email: "info@thexgroup.ca",
+  address: "#208 17520 108th Ave. NW Edmonton AB T5S 1E8",
+  // parentCompany: "X Freight Group",
   url: "https://www.thexgroup.ca",
 };
 
@@ -18,6 +18,7 @@ export const NAV_LINKS = [
   { label: "Permits & Escorts", href: "/permits-escorts" },
   { label: "Careers", href: "/careers" },
   { label: "About Us", href: "/about-us" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const OPERATING_ENTITIES = [

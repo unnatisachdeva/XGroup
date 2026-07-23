@@ -26,10 +26,7 @@ export function Footer() {
               Asset-based trucking for Western Canada&apos;s oilfield, mining, and energy sectors.
               We own what we run.
             </p>
-            {/* <div className="flex items-center gap-2 text-xs text-[#6E7580] pt-2">
-              <ShieldCheck className="w-4 h-4 text-[#CC0000]" />
-              <span>Part of the X Freight Group family of companies</span>
-            </div> */}
+  
           </div>
 
           {/* Nav Column */}
@@ -93,23 +90,19 @@ export function Footer() {
           {/* Contact Column */}
           <div>
             <h3 className="font-display font-bold text-sm text-[#F5F6F7] uppercase tracking-wider mb-4 border-l-2 border-[#CC0000] pl-2.5">
-              Operations & Dispatch
+              Contact Us 
             </h3>
             <div className="flex flex-col gap-3 text-sm">
               <a
-                href={`tel:${SITE_CONFIG.phone}`}
-                className="flex items-start gap-3 p-3 rounded-xl bg-white border border-[#E6E6E6] hover:border-[#CC0000]/50 transition-colors group"
-              >
-                <Phone className="w-5 h-5 text-[#CC0000] shrink-0 mt-0.5" />
-                <div className="flex flex-col">
-                  <span className="text-[11px] font-display font-semibold uppercase text-[#6E7580]">
-                    24/7 Dispatch Phone
-                  </span>
-                  <span className="font-display font-bold text-[#111111] group-hover:text-[#CC0000]">
-                    {SITE_CONFIG.displayPhone}
-                  </span>
-                </div>
-              </a>
+  href={`tel:${SITE_CONFIG.phone}`}
+  className="flex items-center gap-2 group"
+>
+  <Phone className="w-5 h-5 text-[#CC0000] shrink-0" />
+
+  <span className="font-display font-bold text-[#111111] transition-colors group-hover:text-[#CC0000]">
+    {SITE_CONFIG.displayPhone}
+  </span>
+</a>
 
               <a
                 href={`mailto:${SITE_CONFIG.email}`}
@@ -120,7 +113,7 @@ export function Footer() {
               </a>
 
               <div className="flex items-center gap-2.5 text-[#6B6B6B] pt-1">
-                <MapPin className="w-4 h-4 text-[#5E7789]" />
+                <MapPin className="w-5 h-5 text-[#CC0000] flex-shrink-0"/>
                 <span>{SITE_CONFIG.address}</span>
               </div>
             </div>
