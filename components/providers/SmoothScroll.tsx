@@ -37,7 +37,9 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       touchMultiplier: 1.6,
-      anchors: true,
+      // Anchor interception is handled manually on route change (see below) so
+      // Lenis doesn't hijack cross-page links like /services#heavyhaul.
+      anchors: false,
     });
     lenisRef.current = lenis;
     window.__lenis = lenis;
