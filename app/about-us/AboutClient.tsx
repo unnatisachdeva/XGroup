@@ -101,6 +101,14 @@ export default function AboutClient() {
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
+  // Timeline rail draw — tied to the story stream's scroll progress.
+  const streamRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: storyProgress } = useScroll({
+    target: streamRef,
+    offset: ["start 65%", "end 75%"],
+  });
+  const railHeight = useTransform(storyProgress, [0, 1], ["0%", "100%"]);
+
   return (
     <div className="flex flex-col w-full bg-[var(--color-bg-primary)]">
       {/* ------------------------------------------------------------- HERO */}
@@ -216,20 +224,27 @@ export default function AboutClient() {
             </div>
           </div>
 
-          {/* Paragraph stream */}
+          {/* Paragraph stream — timeline */}
           <div className="lg:col-span-8 lg:pt-2">
-            <div className="flex flex-col">
+            <div ref={streamRef} className="relative flex flex-col">
+              {/* Timeline rail */}
+              <div className="pointer-events-none absolute bottom-6 left-[13px] top-6 w-px bg-[#E6E6E6]">
+                <motion.div
+                  className="absolute left-0 top-0 w-px origin-top bg-[#CC0000]"
+                  style={reduce ? { height: "100%" } : { height: railHeight }}
+                />
+              </div>
+
               {STORY.map((item, i) => (
                 <Reveal key={item.id} delay={i * 0.06}>
-                  <article
-                    className={`grid grid-cols-[auto_1fr] gap-6 sm:gap-8 py-9 lg:py-10 ${
-                      i === 0 ? "" : "border-t border-[#E6E6E6]"
-                    }`}
-                  >
-                    <span className="font-display font-bold text-sm text-[#8A919D] tabular-nums pt-1.5">
-                      {item.id}
-                    </span>
-                    <p className="text-base sm:text-lg lg:text-xl text-[#4F4F4F] leading-relaxed max-w-2xl">
+                  <article className="grid grid-cols-[auto_1fr] gap-6 py-8 sm:gap-8 lg:py-9">
+                    {/* Timeline node */}
+                    <div className="relative flex justify-center pt-1.5">
+                      <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full border border-[#E6E6E6] bg-white font-display text-[0.7rem] font-bold tabular-nums text-[#8A919D] shadow-[0_2px_8px_rgba(15,23,42,0.06)] transition-colors duration-300 group-hover:border-[#CC0000]">
+                        {item.id}
+                      </span>
+                    </div>
+                    <p className="max-w-2xl pt-1 text-base leading-relaxed text-[#4F4F4F] sm:text-lg lg:text-xl">
                       {item.body}
                     </p>
                   </article>
