@@ -27,6 +27,19 @@ export function Header() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  // When a nav link points to the page we're already on, the route doesn't
+  // change so scroll restoration never fires — force a jump to the top.
+  const scrollToTop = (href: string) => {
+    const target = href.split("#")[0];
+    if (target !== pathname) return;
+    if (typeof window === "undefined") return;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -62,6 +75,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => scrollToTop(link.href)}
                 className={`group relative font-display text-sm font-semibold transition-colors duration-200 py-1 ${
                   isActive ? "text-[#CC0000]" : "text-[#4F4F4F] hover:text-[#111111]"
                 }`}
@@ -139,6 +153,7 @@ export function Header() {
                   >
                     <Link
                       href={link.href}
+                      onClick={() => scrollToTop(link.href)}
                       className={`block py-3 px-4 rounded-xl text-lg font-display font-bold transition-all ${
                         isActive
                           ? "bg-[#FFF4F4] text-[#CC0000] border border-[#CC0000]/30"
