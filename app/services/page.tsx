@@ -6,6 +6,7 @@ import { ArrowRight, Construction, Container, Pickaxe, Route, Truck } from "luci
 import type { ElementType } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Parallax } from "@/components/motion/Parallax";
 
 interface ServiceData {
   id: string;
@@ -355,14 +356,16 @@ export default function ServicesPage() {
                   }`}
                 >
                   <div className="group relative h-[340px] overflow-hidden rounded-2xl border border-[#E6E6E6] bg-white shadow-[0_22px_70px_rgba(15,23,42,0.12)] sm:h-[440px] lg:h-[520px]">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
-                      sizes="(min-width: 1024px) 50vw, 100vw"
-                      priority={index === 0}
-                    />
+                    <Parallax className="absolute inset-0" amount={0.1}>
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        priority={index === 0}
+                      />
+                    </Parallax>
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
                     <div className="pointer-events-none absolute bottom-5 left-5 flex items-center gap-2.5">
                       <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#CC0000] text-white shadow-lg">
