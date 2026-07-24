@@ -153,7 +153,7 @@ export default function Home() {
       {/* Hero */}
       <Hero
         // height="full"
-        // eyebrow="Asset-Based Fleet — Oilfield · Mining · Energy"
+        eyebrow="Asset-Based Fleet & 24/7 Dispatch"
         title="Owned Trucks. Proven Ground."
         subtitle="Western Canada based trucking, serving Canada and the USA, from Laredo to Prudhoe Bay — safely and reliably keeping your supply chain moving."
         ctaPrimary={{ label: "Request Service", href: "/get-a-quote" }}
