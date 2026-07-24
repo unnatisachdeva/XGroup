@@ -11,6 +11,14 @@ export function Footer() {
       {/* Subtle background industrial accent line */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#CC0000]/40 to-transparent" />
 
+      {/* Oversized editorial brand watermark */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -bottom-6 right-4 select-none font-display text-[22vw] font-black leading-none tracking-tighter text-[#111111]/[0.03] lg:text-[13rem]"
+      >
+        X GROUP
+      </span>
+
       <div className="max-w-[1280px] mx-auto px-5 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[#1C2028]">
           {/* Brand Column */}
@@ -47,9 +55,12 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="hover:text-[#CC0000] transition-colors duration-150 flex items-center gap-1.5"
+                    className="group/link flex w-fit items-center gap-1.5 transition-colors duration-150 hover:text-[#CC0000]"
                   >
-                    <span>{link.label}</span>
+                    <span className="relative">
+                      {link.label}
+                      <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-[#CC0000] transition-transform duration-300 ease-out group-hover/link:scale-x-100" />
+                    </span>
                   </Link>
                 </li>
               ))}
