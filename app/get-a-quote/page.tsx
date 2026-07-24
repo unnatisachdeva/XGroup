@@ -42,11 +42,11 @@ export default function GetAQuotePage() {
                 </p>
                 <a href="tel:+13685999677" className="flex items-center gap-3 text-[#334155] hover:text-[#CC0000]">
                   <Phone className="h-4 w-4" />
-                  <span>+1-368-599-9677</span>
+                  <span>+1-(587) 693-1551</span>
                 </a>
-                <a href="mailto:info@xtransport.ca" className="flex items-center gap-3 text-[#334155] hover:text-[#CC0000]">
+                <a href="mailto:info@thexgroup.ca" className="flex items-center gap-3 text-[#334155] hover:text-[#CC0000]">
                   <Mail className="h-4 w-4" />
-                  <span>info@xtransport.ca</span>
+                  <span>info@thexgroup.ca</span>
                 </a>
               </div>
             </div>

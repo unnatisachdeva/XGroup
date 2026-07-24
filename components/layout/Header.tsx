@@ -37,13 +37,17 @@ export function Header() {
       <div className="max-w-[1280px] mx-auto px-5 lg:px-10 flex items-center justify-between">
         {/* Brand Logo / Wordmark */}
         <Link href="/" className="group flex items-center" aria-label="The X Group Inc. home">
-          <div className="relative h-18 w-52 overflow-visible transition-transform duration-200 group-hover:scale-105">
+          <div
+            className={`relative transition-all duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transform-none ${
+              scrolled ? "h-12 w-44" : "h-16 w-52"
+            }`}
+          >
             <Image
               src="/logo.png"
               alt="The X Group Inc. logo"
               fill
-              className="object-contain"
-              sizes="208px"
+              className="object-cover object-center"
+              sizes="154px"
               priority
             />
           </div>

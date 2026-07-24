@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, ShieldCheck, ExternalLink } from "lucide-react";
 import { SITE_CONFIG, NAV_LINKS, OPERATING_ENTITIES } from "@/lib/constants";
 
@@ -14,13 +15,20 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[#1C2028]">
           {/* Brand Column */}
           <div className="flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CC0000] to-[#C85C0A] flex items-center justify-center text-[#0A0C10] font-black text-xl shadow-lg">
-                X
+            <Link
+              href="/"
+              className="group inline-block w-fit"
+              aria-label="The X Group Inc. home"
+            >
+              <div className="relative h-20 w-52 transition-transform duration-200 ease-out group-hover:scale-[1.03] motion-reduce:transform-none">
+                <Image
+                  src="/logo.png"
+                  alt="The X Group Inc. logo"
+                  fill
+                  className="object-cover object-left"
+                  sizes="168px"
+                />
               </div>
-              <span className="font-display font-extrabold text-lg text-[#111111]">
-                THE X GROUP <span className="text-[#CC0000] text-xs uppercase">INC</span>
-              </span>
             </Link>
             <p className="text-sm text-[#4F4F4F] leading-relaxed">
               Asset-based trucking for Western Canada&apos;s oilfield, mining, and energy sectors.
@@ -112,9 +120,11 @@ export function Footer() {
                 <span>{SITE_CONFIG.email}</span>
               </a>
 
-              <div className="flex items-center gap-2.5 text-[#6B6B6B] pt-1">
-                <MapPin className="w-5 h-5 text-[#CC0000] flex-shrink-0"/>
-                <span>{SITE_CONFIG.address}</span>
+              <div className="group flex items-center gap-2.5 pt-1 cursor-pointer">
+                <MapPin className="w-5 h-5 text-[#CC0000] flex-shrink-0" />
+                <span className="text-[#6B6B6B] transition-colors duration-300 group-hover:text-[#CC0000]">
+                  {SITE_CONFIG.address}
+                </span>
               </div>
             </div>
           </div>

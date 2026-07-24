@@ -1,8 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Phone } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type Variants,
+} from "framer-motion";
+import { Phone, ArrowRight } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
 
 interface CtaBannerProps {
@@ -11,7 +17,11 @@ interface CtaBannerProps {
   subtitle?: string;
   buttonLabel?: string;
   buttonHref?: string;
+  /** Optional background photograph (defaults to project photography). */
+  backgroundImage?: string;
 }
+
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export function CtaBanner({
   eyebrow = "GET STARTED",
@@ -19,47 +29,106 @@ export function CtaBanner({
   subtitle = "Partner with an asset-based fleet built for Western Canada's toughest freight. Get a fast, accurate quote from our operations team.",
   buttonLabel = "Request a Quote",
   buttonHref = "/get-a-quote",
+  backgroundImage = "/mainphoto.jpeg",
 }: CtaBannerProps) {
+  const shouldReduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+
+  const container: Variants = {
+    hidden: {},
+    show: {
+      transition: shouldReduce ? {} : { staggerChildren: 0.1 },
+    },
+  };
+  const item: Variants = {
+    hidden: shouldReduce ? { opacity: 0 } : { opacity: 0, y: 22 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
+  };
+
   return (
-    <section className="relative w-full py-20 bg-[#F7F7F3] overflow-hidden border-y border-[#E6E6E6]">
-      {/* Background photography overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-20 filter grayscale"
+    <section
+      ref={sectionRef}
+      className="relative w-full overflow-hidden bg-[#111111]"
+    >
+      {/* Parallax photographic texture */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0 bg-cover bg-center opacity-[0.22] grayscale"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80')",
+          backgroundImage: `url('${backgroundImage}')`,
+          y: shouldReduce ? 0 : bgY,
+          scale: 1.12,
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/90 to-white/95" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#111111] via-[#111111]/92 to-[#111111]/60" />
+      {/* Accent hairline top */}
+      <div className="absolute top-0 left-0 h-[3px] w-24 bg-[#CC0000]" />
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-5 lg:px-10 text-center">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-5 lg:px-10 py-20 lg:py-24">
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto flex flex-col items-center gap-5"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12"
         >
-          <span className="eyebrow-label">{eyebrow}</span>
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#111111] tracking-tight">
-            {title}
-          </h2>
-          <p className="text-[#4F4F4F] text-base sm:text-lg leading-relaxed max-w-xl">
-            {subtitle}
-          </p>
+          <div className="flex flex-col gap-5 lg:col-span-8">
+            <motion.div variants={item} className="flex items-center gap-3">
+              <span className="h-3.5 w-[3px] bg-[#CC0000]" />
+              <span className="font-display text-[0.72rem] font-bold uppercase tracking-[0.22em] text-[#E60000]">
+                {eyebrow}
+              </span>
+            </motion.div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-4">
-            <Button href={buttonHref} variant="primary" showArrow className="!py-4 !px-9 !text-base">
+            <motion.h2
+              variants={item}
+              className="font-display font-extrabold text-3xl sm:text-4xl lg:text-[3.25rem] leading-[1.04] tracking-[-0.02em] text-white"
+            >
+              {title}
+            </motion.h2>
+
+            <motion.p
+              variants={item}
+              className="max-w-xl text-base sm:text-lg leading-relaxed text-[#B7BAC1]"
+            >
+              {subtitle}
+            </motion.p>
+          </div>
+
+          <motion.div
+            variants={item}
+            className="flex flex-col items-start gap-5 lg:col-span-4 lg:items-end lg:text-right"
+          >
+            <a
+              href={buttonHref}
+              className="group inline-flex items-center gap-2.5 rounded-full bg-[#CC0000] px-8 py-4 font-display text-base font-bold text-white shadow-[0_10px_30px_rgba(204,0,0,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#E60000] hover:shadow-[0_14px_38px_rgba(204,0,0,0.5)]"
+            >
               {buttonLabel}
-            </Button>
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </a>
+
             <a
               href={`tel:${SITE_CONFIG.phone}`}
-              className="flex items-center gap-2 text-sm font-display font-semibold text-[#4F4F4F] hover:text-[#CC0000] transition-colors"
+              className="group flex items-center gap-2.5 text-sm text-[#9AA0AA] transition-colors hover:text-white"
             >
-              <Phone className="w-4 h-4 text-[#CC0000]" />
-              <span>or call dispatch 24/7 <strong className="text-[#111111]">{SITE_CONFIG.displayPhone}</strong></span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#2C2C2C] bg-[#1A1A1A] text-[#CC0000] transition-colors group-hover:border-[#CC0000]">
+                <Phone className="h-4 w-4" />
+              </span>
+              <span className="flex flex-col leading-tight">
+                <span className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#6B6B6B]">
+                  Dispatch 24/7
+                </span>
+                <strong className="font-display text-[0.95rem] font-bold text-white">
+                  {SITE_CONFIG.displayPhone}
+                </strong>
+              </span>
             </a>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

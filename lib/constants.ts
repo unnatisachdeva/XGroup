@@ -15,7 +15,7 @@ export const SITE_CONFIG = {
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
-  { label: "Permits & Escorts", href: "/permits-escorts" },
+  { label: "Permits & Escorts", href: "/regulations" },
   { label: "Careers", href: "/careers" },
   { label: "About Us", href: "/about-us" },
   { label: "Contact", href: "/contact" },

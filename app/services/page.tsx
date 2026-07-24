@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Construction, Container, Pickaxe, Route, Truck } from "lucide-react";
 import type { ElementType } from "react";
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface ServiceData {
   id: string;
@@ -70,90 +70,177 @@ const SERVICES_LIST: ServiceData[] = [
   },
 ];
 
+const SERVICE_IDS = SERVICES_LIST.map((s) => s.id);
+
 export default function ServicesPage() {
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const highlightTimer = useRef<number | undefined>(undefined);
 
-  const navigateToService = (id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
+  // Scroll a service section into view (respecting the fixed header via
+  // each section's `scroll-mt-*`) and flash the highlight effect.
+  const focusService = useCallback(
+    (id: string, smooth: boolean = true) => {
+      const target = document.getElementById(id);
+      if (!target) return;
 
-    window.history.pushState(null, "", `#${id}`);
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    setHighlightedId(id);
-    window.setTimeout(() => setHighlightedId(null), 1500);
-  };
+      target.scrollIntoView({
+        behavior: smooth && !prefersReducedMotion ? "smooth" : "auto",
+        block: "start",
+      });
+
+      setHighlightedId(id);
+      window.clearTimeout(highlightTimer.current);
+      highlightTimer.current = window.setTimeout(() => setHighlightedId(null), 1600);
+    },
+    [prefersReducedMotion]
+  );
+
+  // In-page quick-nav clicks.
+  const navigateToService = useCallback(
+    (id: string) => {
+      window.history.pushState(null, "", `#${id}`);
+      focusService(id, true);
+    },
+    [focusService]
+  );
+
+  // Handle landing on the page via a hash URL (e.g. /services#oilfield) and
+  // any subsequent same-page hash changes.
+  useEffect(() => {
+    const readHash = () =>
+      typeof window !== "undefined"
+        ? decodeURIComponent(window.location.hash.replace(/^#/, ""))
+        : "";
+
+    let raf = 0;
+    let settleTimer = 0;
+
+    const scrollToHash = (smooth: boolean) => {
+      const id = readHash();
+      if (!id || !SERVICE_IDS.includes(id)) return;
+
+      // Run after layout so the target has its final position, then again
+      // once images/fonts have had a moment to settle so we don't land short.
+      raf = window.requestAnimationFrame(() => {
+        focusService(id, smooth);
+        settleTimer = window.setTimeout(() => {
+          const target = document.getElementById(id);
+          target?.scrollIntoView({ behavior: "auto", block: "start" });
+        }, 320);
+      });
+    };
+
+    // On mount: jump-to (no smooth) so deep links land reliably.
+    scrollToHash(false);
+
+    // Same-page hash clicks: smooth.
+    const onHashChange = () => scrollToHash(true);
+    window.addEventListener("hashchange", onHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", onHashChange);
+      window.cancelAnimationFrame(raf);
+      window.clearTimeout(settleTimer);
+      window.clearTimeout(highlightTimer.current);
+    };
+  }, [focusService]);
+
+  // Motion helpers, gated on prefers-reduced-motion.
+  const reveal = (delay = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 26 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: "-80px" },
+          transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const, delay },
+        };
 
   return (
-    <div className="flex flex-col w-full bg-[#F7F7F3]">
+    <div className="flex w-full flex-col bg-[#F7F7F3]">
       {/* Hero Section */}
-      <section className="relative w-full min-h-[54vh] lg:min-h-[62vh] flex items-center justify-center pt-28 pb-14 px-5 lg:px-10 overflow-hidden">
+      <section className="relative flex min-h-[54vh] w-full items-center justify-center overflow-hidden px-5 pb-14 pt-28 lg:min-h-[62vh] lg:px-10">
         <div
-          className="absolute inset-0 bg-cover bg-[100%] bg-no-repeat"
-          style={{
-            backgroundImage: "url('/services.jpeg')",
-          }}
+          className="absolute inset-0 scale-105 bg-cover bg-[100%] bg-no-repeat"
+          style={{ backgroundImage: "url('/services.jpeg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/10 to-[#F7F7F3]/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-[#F7F7F3]" />
 
-        <div className="relative z-10 max-w-[1280px] w-full mx-auto text-center flex flex-col items-center gap-4 translate-y-25">
-          <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]">
+        <div className="relative z-10 mx-auto flex w-full max-w-[1280px] translate-y-16 flex-col items-center gap-5 text-center">
+          <motion.span
+            {...reveal(0)}
+            className="inline-flex items-center gap-2.5 font-display text-[11px] font-extrabold uppercase tracking-[0.32em] text-white/90"
+          >
+            <span className="h-px w-8 bg-[#CC0000]" />
+            The X Group Inc.
+            <span className="h-px w-8 bg-[#CC0000]" />
+          </motion.span>
+          <motion.h1
+            {...reveal(0.06)}
+            className="font-display text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:text-5xl lg:text-6xl"
+          >
             Our <span className="text-[#CC0000]">Services</span>
-          </h1>
-          <p className="text-black text-base sm:text-lg lg:text-xl max-w-3xl font-normal leading-relaxed">
+          </motion.h1>
+          <motion.p
+            {...reveal(0.12)}
+            className="max-w-3xl text-base font-normal leading-relaxed text-white/90 drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)] sm:text-lg lg:text-xl"
+          >
             Comprehensive logistics solutions built for Western Canada&apos;s toughest environments and most demanding industries.
-          </p>
+          </motion.p>
         </div>
       </section>
 
-      <section className="bg-[#F7F7F3] px-5 pb-8 pt-10 lg:px-10 lg:pb-12">
-        <div className="mx-auto max-w-[1280px] rounded-xl border border-[#E6E6E6] bg-white px-6 py-10 shadow-[0_22px_70px_rgba(15,23,42,0.08)] sm:px-9 lg:px-12">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-3">
+      {/* Quick-nav index */}
+      <section className="bg-[#F7F7F3] px-5 pb-8 pt-14 lg:px-10 lg:pb-12 lg:pt-20">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+            <motion.div {...reveal(0)} className="lg:col-span-4">
               <span className="font-display text-xs font-extrabold uppercase tracking-[0.24em] text-[#CC0000]">
                 Our Services
               </span>
-              <h2 className="mt-4 font-display text-3xl font-black leading-tight tracking-tight text-[#111111] sm:text-4xl">
-                Specialized solutions. Delivered with expertise.
+              <h2 className="mt-4 font-display text-3xl font-black leading-[1.05] tracking-tight text-[#111111] sm:text-4xl">
+                Specialized solutions.
+                <br />
+                Delivered with expertise.
               </h2>
-              <p className="mt-5 text-sm leading-7 text-[#4F4F4F]">
+              <p className="mt-5 max-w-md text-sm leading-7 text-[#4F4F4F]">
                 Explore our core transportation and logistics services. Click any service below to learn more.
               </p>
-            </div>
+              <div className="mt-7 h-px w-24 bg-[#111111]/15" />
+            </motion.div>
 
-            <div className="relative grid gap-4 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-6 lg:grid-rows-3">
-              {SERVICES_LIST.map((service, index) => {
-                const Icon = service.icon;
-                const placement = [
-                  "lg:col-start-2 lg:col-span-2 lg:row-start-1",
-                  "lg:col-start-1 lg:col-span-2 lg:row-start-2",
-                  "lg:col-start-4 lg:col-span-2 lg:row-start-2",
-                  "lg:col-start-2 lg:col-span-2 lg:row-start-3",
-                  "lg:col-start-5 lg:col-span-2 lg:row-start-3",
-                ][index];
-
-                return (
-                  <button
-                    key={service.id}
-                    type="button"
-                    onClick={() => navigateToService(service.id)}
-                    className={`group flex min-h-28 items-center justify-between gap-5 border border-[#E6E6E6] bg-white px-7 py-5 text-left shadow-[0_12px_34px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-[#CC0000]/50 hover:shadow-[0_18px_45px_rgba(15,23,42,0.13)] ${placement}`}
-                    style={{
-                      clipPath: "polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%)",
-                      borderRadius: 12,
-                    }}
-                  >
-                    <span className="flex items-center gap-4">
-                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#CC0000]/20 bg-[#CC0000]/10 text-[#CC0000] transition-transform duration-300 group-hover:-translate-y-1">
-                        <Icon className="h-6 w-6" />
-                      </span>
-                      <span className="font-display text-lg font-extrabold leading-tight text-[#111111]">
-                        {service.title}
-                      </span>
-                    </span>
-                    <ArrowRight className="h-5 w-5 shrink-0 text-[#CC0000] transition-transform duration-300 group-hover:translate-x-1" />
-                  </button>
-                );
-              })}
+            <div className="lg:col-span-8">
+              <ul className="divide-y divide-[#E6E6E6] border-y border-[#E6E6E6]">
+                {SERVICES_LIST.map((service, index) => {
+                  const Icon = service.icon;
+                  return (
+                    <motion.li key={service.id} {...reveal(index * 0.05)}>
+                      <button
+                        type="button"
+                        onClick={() => navigateToService(service.id)}
+                        className="group flex w-full items-center gap-5 py-5 text-left transition-colors duration-300 sm:gap-7 sm:py-6"
+                      >
+                        <span className="w-9 shrink-0 font-display text-sm font-bold tabular-nums text-[#8A919D] transition-colors duration-300 group-hover:text-[#CC0000]">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#E6E6E6] bg-white text-[#5F6672] transition-all duration-300 group-hover:border-[#CC0000]/40 group-hover:bg-[#CC0000]/10 group-hover:text-[#CC0000]">
+                          <Icon className="h-5 w-5" />
+                        </span>
+                        <span className="flex min-w-0 flex-1 flex-col">
+                          <span className="font-display text-lg font-extrabold leading-tight text-[#111111] transition-colors duration-300 group-hover:text-[#CC0000] sm:text-xl">
+                            {service.title}
+                          </span>
+                          <span className="mt-1 hidden truncate text-sm text-[#6B6B6B] sm:block">
+                            {service.tagline}
+                          </span>
+                        </span>
+                        <ArrowRight className="h-5 w-5 shrink-0 text-[#CC0000] transition-transform duration-300 group-hover:translate-x-1.5" />
+                      </button>
+                    </motion.li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
         </div>
@@ -162,36 +249,46 @@ export default function ServicesPage() {
       <main>
         {SERVICES_LIST.map((service, index) => {
           const isImageLeft = index % 2 === 1;
-          const isProminentImage = index === 1 || index === 3;
           const chips = service.whoItsFor.split(",").map((item) => item.trim());
+          const isHighlighted = highlightedId === service.id;
 
           return (
             <section
               key={service.id}
               id={service.id}
-              className={`scroll-mt-28 px-5 py-20 transition-colors duration-700 sm:py-24 lg:px-10 lg:py-28 ${
+              className={`relative scroll-mt-28 px-5 py-20 transition-colors duration-700 sm:py-24 lg:px-10 lg:py-28 ${
                 index % 2 === 0 ? "bg-[#F7F7F3]" : "bg-white"
-              } ${highlightedId === service.id ? "!bg-[#CC0000]/10" : ""}`}
+              } ${isHighlighted ? "!bg-[#CC0000]/[0.07]" : ""}`}
             >
-              <motion.article
-                initial={{ opacity: 0, y: 34 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, ease: "easeOut" }}
-                className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16"
-              >
-                <div
+              {/* Highlight accent bar */}
+              <span
+                aria-hidden
+                className={`pointer-events-none absolute left-0 top-0 h-full w-[3px] bg-[#CC0000] transition-opacity duration-500 ${
+                  isHighlighted ? "opacity-100" : "opacity-0"
+                }`}
+              />
+
+              <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
+                {/* Text column */}
+                <motion.div
+                  {...reveal(0)}
                   className={`flex flex-col ${
-                    isImageLeft ? "lg:col-start-8 lg:col-span-5" : "lg:col-span-5"
+                    isImageLeft ? "lg:col-start-7 lg:col-span-6" : "lg:col-span-6"
                   }`}
                 >
-                  <span className="font-display text-xs font-extrabold uppercase tracking-[0.24em] text-[#CC0000]">
-                    {service.tagline}
-                  </span>
-                  <h2 className="mt-4 font-display text-4xl font-black leading-tight tracking-tight text-[#111111] sm:text-5xl">
+                  <div className="flex items-center gap-4">
+                    <span className="font-display text-5xl font-black leading-none tracking-tighter text-[#111111]/[0.08] sm:text-6xl">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="font-display text-[11px] font-extrabold uppercase leading-snug tracking-[0.22em] text-[#CC0000]">
+                      {service.tagline}
+                    </span>
+                  </div>
+
+                  <h2 className="mt-5 font-display text-4xl font-black leading-[1.03] tracking-tight text-[#111111] sm:text-5xl">
                     {service.title}
                   </h2>
-                  <p className="mt-6 text-base leading-8 text-[#4F4F4F] sm:text-lg">
+                  <p className="mt-6 max-w-xl text-base leading-8 text-[#4F4F4F] sm:text-lg">
                     {service.body}
                   </p>
 
@@ -199,16 +296,34 @@ export default function ServicesPage() {
                     <h3 className="font-display text-xs font-extrabold uppercase tracking-[0.2em] text-[#111111]">
                       Who It&apos;s For
                     </h3>
-                    <div className="mt-4 flex flex-wrap gap-2.5">
+                    <motion.div
+                      className="mt-4 flex flex-wrap gap-2.5"
+                      initial={prefersReducedMotion ? undefined : "hidden"}
+                      whileInView={prefersReducedMotion ? undefined : "shown"}
+                      viewport={{ once: true, margin: "-60px" }}
+                      variants={
+                        prefersReducedMotion
+                          ? undefined
+                          : { shown: { transition: { staggerChildren: 0.04 } } }
+                      }
+                    >
                       {chips.map((chip) => (
-                        <span
+                        <motion.span
                           key={chip}
-                          className="rounded-full border border-[#CC0000]/20 bg-[#CC0000]/10 px-3.5 py-2 text-xs font-semibold capitalize text-[#4F4F4F]"
+                          variants={
+                            prefersReducedMotion
+                              ? undefined
+                              : {
+                                  hidden: { opacity: 0, y: 8 },
+                                  shown: { opacity: 1, y: 0 },
+                                }
+                          }
+                          className="rounded-full border border-[#E6E6E6] bg-white px-3.5 py-2 text-xs font-semibold capitalize text-[#4F4F4F] transition-colors duration-200 hover:border-[#CC0000]/30 hover:text-[#111111]"
                         >
                           {chip}
-                        </span>
+                        </motion.span>
                       ))}
-                    </div>
+                    </motion.div>
                   </div>
 
                   <Link
@@ -218,33 +333,48 @@ export default function ServicesPage() {
                     <span>Request a Quote</span>
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
-                </div>
+                </motion.div>
 
-                <div
+                {/* Image column */}
+                <motion.div
+                  {...(prefersReducedMotion
+                    ? {}
+                    : {
+                        initial: { opacity: 0, scale: 0.96 },
+                        whileInView: { opacity: 1, scale: 1 },
+                        viewport: { once: true, margin: "-80px" },
+                        transition: {
+                          duration: 0.7,
+                          ease: [0.22, 1, 0.36, 1] as const,
+                        },
+                      })}
                   className={`${
                     isImageLeft
                       ? "lg:col-start-1 lg:row-start-1 lg:col-span-6"
                       : "lg:col-start-7 lg:col-span-6"
                   }`}
                 >
-                  <div
-                    className={`relative overflow-hidden rounded-2xl border border-[#E6E6E6] bg-white shadow-[0_22px_70px_rgba(15,23,42,0.12)] ${
-                      isProminentImage
-                        ? "h-[380px] sm:h-[500px] lg:h-[570px]"
-                        : "h-[340px] sm:h-[440px] lg:h-[500px]"
-                    }`}
-                  >
+                  <div className="group relative h-[340px] overflow-hidden rounded-2xl border border-[#E6E6E6] bg-white shadow-[0_22px_70px_rgba(15,23,42,0.12)] sm:h-[440px] lg:h-[520px]">
                     <Image
                       src={service.image}
                       alt={service.title}
                       fill
-                      className="object-cover transition-transform duration-700 hover:scale-105"
+                      className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
                       sizes="(min-width: 1024px) 50vw, 100vw"
                       priority={index === 0}
                     />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                    <div className="pointer-events-none absolute bottom-5 left-5 flex items-center gap-2.5">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#CC0000] text-white shadow-lg">
+                        <service.icon className="h-4 w-4" />
+                      </span>
+                      <span className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]">
+                        {String(index + 1).padStart(2, "0")} / {String(SERVICES_LIST.length).padStart(2, "0")}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.article>
+                </motion.div>
+              </div>
             </section>
           );
         })}
