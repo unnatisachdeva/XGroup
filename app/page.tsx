@@ -13,6 +13,8 @@ import { ArrowUpRight, ArrowRight, ShieldCheck, Truck, MapPin } from "lucide-rea
 import { Hero } from "@/components/sections/Hero";
 import { CertificationsStrip } from "@/components/sections/CertificationsStrip";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+import { TextReveal } from "@/components/motion/TextReveal";
+import { Parallax } from "@/components/motion/Parallax";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -182,12 +184,11 @@ export default function Home() {
               </span>
             </motion.div>
 
-            <motion.h2
-              variants={reveal}
+            <TextReveal
+              as="h2"
+              text="An asset-based carrier built for the sectors that don't stop."
               className="font-display text-3xl font-extrabold leading-[1.08] tracking-[-0.02em] text-[#111111] sm:text-4xl lg:text-[3.15rem]"
-            >
-              An asset-based carrier built for the sectors that don&apos;t stop.
-            </motion.h2>
+            />
 
             <motion.p
               variants={reveal}
@@ -219,13 +220,15 @@ export default function Home() {
               viewport={{ once: true, margin: "-100px" }}
               className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[#E6E6E6] shadow-[0_16px_45px_rgba(15,23,42,0.08)]"
             >
-              <Image
-                src="/driver.jpg"
-                alt="An X Group driver on site in Western Canada"
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-              />
+              <Parallax className="absolute inset-0" amount={0.12}>
+                <Image
+                  src="/driver.jpg"
+                  alt="An X Group driver on site in Western Canada"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+              </Parallax>
               <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
               {/* <span className="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1.5 font-display text-[0.68rem] font-bold uppercase tracking-[0.12em] text-[#111111] backdrop-blur-sm">
                 Edmonton, AB — Head Office
@@ -287,12 +290,11 @@ export default function Home() {
                   Our Capabilities
                 </span>
               </motion.div>
-              <motion.h2
-                variants={reveal}
+              <TextReveal
+                as="h2"
+                text="Built for the toughest freight"
                 className="font-display text-3xl font-extrabold leading-[1.06] tracking-[-0.02em] text-[#111111] sm:text-4xl lg:text-5xl"
-              >
-                Built for the toughest freight
-              </motion.h2>
+              />
               <motion.p
                 variants={reveal}
                 className="text-base text-[#4F4F4F] sm:text-lg"
@@ -330,6 +332,8 @@ export default function Home() {
                   href={service.href}
                   className="group relative flex h-[500px] shrink-0 basis-full snap-start flex-col overflow-hidden rounded-2xl border border-[#E6E6E6] bg-white shadow-[0_16px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)] sm:basis-[calc((100%_-_1.5rem)/2)] lg:h-[540px] lg:basis-[calc((100%_-_3rem)/3)]"
                 >
+                  {/* Top accent bar reveal on hover */}
+                  <span className="absolute inset-x-0 top-0 z-10 h-1 origin-left scale-x-0 bg-[#CC0000] transition-transform duration-500 ease-out group-hover:scale-x-100" />
                   <div className="relative h-[54%] w-full overflow-hidden bg-[#EDEDE7]">
                     <Image
                       src={service.image}
