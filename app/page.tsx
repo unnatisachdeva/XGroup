@@ -92,7 +92,8 @@ const HERO_STATS = [
 export default function Home() {
   const shouldReduce = useReducedMotion();
   const servicesCarouselRef = useRef<HTMLDivElement>(null);
-  const isDraggingRef = useRef(false);
+  const pointerDownRef = useRef(false);
+  const draggedRef = useRef(false);
   const dragStartXRef = useRef(0);
   const dragStartScrollRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -123,22 +124,39 @@ export default function Home() {
   const handleDragStart = (event: PointerEvent<HTMLDivElement>) => {
     const carousel = servicesCarouselRef.current;
     if (!carousel) return;
-    isDraggingRef.current = true;
+    pointerDownRef.current = true;
+    draggedRef.current = false;
     dragStartXRef.current = event.clientX;
     dragStartScrollRef.current = carousel.scrollLeft;
-    carousel.setPointerCapture(event.pointerId);
+    // NOTE: don't capture the pointer here — capturing on press retargets the
+    // click to the carousel and swallows card link navigation. We only capture
+    // once an actual drag begins (see handleDragMove).
   };
 
   const handleDragMove = (event: PointerEvent<HTMLDivElement>) => {
     const carousel = servicesCarouselRef.current;
-    if (!carousel || !isDraggingRef.current) return;
-    carousel.scrollLeft = dragStartScrollRef.current - (event.clientX - dragStartXRef.current);
+    if (!carousel || !pointerDownRef.current) return;
+    const delta = event.clientX - dragStartXRef.current;
+    if (!draggedRef.current && Math.abs(delta) < 6) return;
+    if (!draggedRef.current) {
+      draggedRef.current = true;
+      carousel.setPointerCapture(event.pointerId);
+    }
+    carousel.scrollLeft = dragStartScrollRef.current - delta;
   };
 
   const handleDragEnd = (event: PointerEvent<HTMLDivElement>) => {
     const carousel = servicesCarouselRef.current;
-    isDraggingRef.current = false;
-    carousel?.releasePointerCapture(event.pointerId);
+    pointerDownRef.current = false;
+    if (draggedRef.current) carousel?.releasePointerCapture(event.pointerId);
+  };
+
+  // Suppress the click that follows a real drag so a swipe never navigates.
+  const handleCardClick = (event: React.MouseEvent) => {
+    if (draggedRef.current) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   };
 
   const reveal: Variants = {
@@ -330,6 +348,7 @@ export default function Home() {
                 <Link
                   key={service.id}
                   href={service.href}
+                  onClick={handleCardClick}
                   className="group relative flex h-[500px] shrink-0 basis-full snap-start flex-col overflow-hidden rounded-2xl border border-[#E6E6E6] bg-white shadow-[0_16px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)] sm:basis-[calc((100%_-_1.5rem)/2)] lg:h-[540px] lg:basis-[calc((100%_-_3rem)/3)]"
                 >
                   {/* Top accent bar reveal on hover */}
