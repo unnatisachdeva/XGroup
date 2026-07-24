@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -11,7 +11,6 @@ interface HomeServiceItem {
   id: string;
   title: string;
   description: string;
-  image: string;
   href: string;
 }
 
@@ -21,46 +20,48 @@ const HOME_SERVICES: HomeServiceItem[] = [
     id: "heavyhaul",
     title: "Heavy-Haul & Over-Dimensional",
     description: "Complex multi-axle moves, permit acquisition & pilot car coordination.",
-    image: "/s-heavyhaul.jpeg",
     href: "/services#heavyhaul",
   },
   {
     id: "opendeck",
     title: "Truckload – Open Deck",
     description: "Flatbed and step-deck trucking across Canada and North America.",
-    image: "/s-opendeck.jpeg",
     href: "/services#opendeck",
   },
   {
     id: "oilfield",
     title: "Oil Field",
     description: "Supporting drilling, completions, frac sand & rig relocations.",
-    image: "/s-oilfield.jpeg",
     href: "/services#oilfield",
   },
   {
     id: "iceroads",
     title: "Ice Road Transport",
     description: "Critical winter freight to remote northern exploration sites.",
-    image: "/s-iceroads.jpeg",
     href: "/services#iceroads",
   },
   {
     id: "aggregate",
     title: "Aggregate",
     description: "High-volume bulk hauling for infrastructure & civil projects.",
-    image: "/s-Aggregate.jpeg",
     href: "/services#aggregate",
   },
 ];
 
 const TOTAL = HOME_SERVICES.length;
+const RED = "#CC0000";
+const DARK = "#111111";
+const LIGHT = "#F4F4F6";
+const DIVIDER = "#E5E5E5";
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 export function HomeServices() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const [pinned, setPinned] = useState(false);
+  const [active, setActive] = useState(0);
 
   // Decide layout mode: pinned stacking on desktop with motion, otherwise a
   // plain vertical list (mobile + reduced motion).
@@ -76,7 +77,8 @@ export function HomeServices() {
   }, []);
 
   // Pinned scroll-stacking timeline. Each subsequent card slides up from the
-  // bottom to cover the previous one; after the last card the section unpins.
+  // bottom to cover the previous one; only one card is visible at a time and
+  // the left image stays fixed. After the last card the section unpins.
   useEffect(() => {
     if (!pinned) return;
     gsap.registerPlugin(ScrollTrigger);
@@ -97,6 +99,10 @@ export function HomeServices() {
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const idx = Math.round(self.progress * (cards.length - 1));
+            setActive(idx);
+          },
         },
       });
 
@@ -112,146 +118,132 @@ export function HomeServices() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#0A0A0A] text-white"
-      aria-label="Our Capabilities"
+      className="relative w-full bg-[#F7F7F3]"
+      aria-label="Our Services"
     >
-      {/* Heading shown when the section is a plain list (mobile / reduced motion) */}
-      <div className={`${pinned ? "hidden" : "block"} px-5 pt-20 pb-10 sm:px-6`}>
-        <SectionHeading />
-      </div>
-
       <div
         ref={pinRef}
         className={
           pinned
-            ? "grid h-[100svh] grid-cols-2 overflow-hidden"
-            : "grid grid-cols-1"
+            ? "grid h-[100svh] grid-cols-2 gap-10 px-10 py-12 xl:gap-14 xl:px-16"
+            : "flex flex-col gap-6 px-5 py-16 sm:px-6"
         }
       >
-        {/* Pinned left panel — only in the stacking layout */}
-        <div className={`${pinned ? "relative block" : "hidden"} overflow-hidden`}>
-          <Image
-            src="/mainphoto.jpeg"
-            alt=""
-            fill
-            aria-hidden
-            className="object-cover"
-            sizes="50vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/65 to-black/80" />
-          <div className="absolute inset-0 [background:radial-gradient(120%_90%_at_20%_10%,transparent_30%,rgba(0,0,0,0.55)_100%)]" />
-          <div className="relative z-10 flex h-full flex-col justify-between p-10 xl:p-14">
-            <SectionHeading dark />
-            <div className="flex items-center gap-3 text-white/50">
-              <span className="font-display text-sm font-bold tabular-nums text-[#CC0000]">
-                {String(TOTAL).padStart(2, "0")}
-              </span>
-              <span className="h-px w-10 bg-white/25" />
-              <span className="font-display text-[0.7rem] font-semibold uppercase tracking-[0.2em]">
-                Specialized Divisions
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Cards column */}
+        {/* Left column — fixed portrait image (uncropped, rounded) */}
         <div
           className={
             pinned
-              ? "relative h-full"
-              : "flex flex-col gap-5 px-5 pb-20 sm:px-6"
+              ? "relative h-full overflow-hidden rounded-3xl bg-black"
+              : "relative aspect-4/5 w-full overflow-hidden rounded-3xl bg-black"
           }
         >
-          {HOME_SERVICES.map((service, index) => (
-            <article
-              key={service.id}
-              ref={(el) => {
-                cardRefs.current[index] = el;
-              }}
-              style={pinned ? { zIndex: index + 1 } : undefined}
-              className={`group relative flex flex-col justify-end overflow-hidden ${
-                pinned
-                  ? "absolute inset-0 rounded-none"
-                  : "min-h-[68vh] rounded-3xl"
-              } ${pinned && index > 0 ? "translate-y-full" : ""}`}
-            >
-              <Image
-                src={service.image}
-                alt={service.title}
-                fill
-                className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
+          <Image
+            src="/portrait2.jpeg"
+            alt="Our Services"
+            fill
+            priority
+            className="object-cover"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
+          {/* Heading overlay */}
+          <h2 className="pointer-events-none absolute left-6 top-6 font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-[-0.02em] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] sm:left-8 sm:top-8 sm:text-5xl lg:text-6xl">
+            Our
+            <br />
+            Services
+          </h2>
+          {/* Bottom progress bar with current index */}
+          <div className="absolute inset-x-6 bottom-6 flex items-center gap-4 sm:inset-x-8 sm:bottom-8">
+            <div className="flex flex-1 items-center gap-2">
+              {HOME_SERVICES.map((s, i) => (
+                <span
+                  key={s.id}
+                  className="h-px flex-1 overflow-hidden bg-white/25"
+                >
+                  <span
+                    className="block h-full bg-white transition-all duration-500"
+                    style={{ width: i <= active ? "100%" : "0%" }}
+                  />
+                </span>
+              ))}
+            </div>
+            <span className="font-display text-xs font-semibold tabular-nums tracking-[0.15em] text-white">
+              {pad(active + 1)}/{pad(TOTAL)}
+            </span>
+          </div>
+        </div>
 
-              {/* Top meta */}
-              <div className="absolute left-7 right-7 top-7 flex items-center justify-between sm:left-9 sm:right-9 sm:top-9">
-                <span className="flex items-center gap-3">
-                  <span className="font-display text-sm font-bold tabular-nums text-[#CC0000]">
-                    {String(index + 1).padStart(2, "0")}
+        {/* Right column — stacked service cards */}
+        <div className={pinned ? "relative h-full" : "flex flex-col gap-5"}>
+          {HOME_SERVICES.map((service, index) => {
+            const isRed = index % 2 === 1;
+            return (
+              <article
+                key={service.id}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
+                style={{
+                  zIndex: index + 1,
+                  backgroundColor: isRed ? RED : LIGHT,
+                  color: isRed ? "#FFFFFF" : DARK,
+                }}
+                className={`flex flex-col justify-between overflow-hidden rounded-3xl p-8 sm:p-10 lg:p-12 ${
+                  pinned ? "absolute inset-0" : "min-h-105"
+                }`}
+              >
+                {/* Top row — number + title */}
+                <div className="flex items-start gap-6 sm:gap-8">
+                  <span className="font-display text-6xl font-extrabold leading-none tabular-nums tracking-[-0.04em] sm:text-7xl lg:text-8xl">
+                    {pad(index + 1)}
                   </span>
-                  <span className="h-px w-8 bg-white/40" />
-                </span>
-                <span className="font-display text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-white/60">
-                  {String(index + 1).padStart(2, "0")} / {String(TOTAL).padStart(2, "0")}
-                </span>
-              </div>
+                  <h3 className="mt-1 max-w-md font-display text-2xl font-extrabold uppercase leading-[1.05] tracking-[-0.01em] sm:text-3xl lg:text-4xl">
+                    {service.title}
+                  </h3>
+                </div>
 
-              {/* Bottom content */}
-              <div className="relative z-10 flex flex-col gap-4 p-7 sm:p-9 lg:p-12">
-                <h3 className="max-w-xl font-display text-3xl font-extrabold leading-[1.04] tracking-[-0.02em] text-white sm:text-4xl lg:text-5xl">
-                  {service.title}
-                </h3>
-                <p className="max-w-md text-base leading-relaxed text-white/75 sm:text-lg">
+                {/* Description */}
+                <p
+                  className="mt-6 max-w-md text-base leading-relaxed sm:text-lg"
+                  style={{ color: isRed ? "rgba(255,255,255,0.85)" : "#4F4F4F" }}
+                >
                   {service.description}
                 </p>
-                <Link
-                  href={service.href}
-                  className="mt-2 inline-flex w-fit items-center gap-2 font-display text-sm font-bold uppercase tracking-[0.08em] text-white transition-colors hover:text-[#FF4646]"
-                >
-                  Read More
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#CC0000] text-white transition-all duration-200 group-hover:bg-[#E60000] group-hover:translate-x-1">
-                    <ArrowRight className="h-4 w-4" />
+
+                {/* Divider */}
+                <div
+                  className="mt-8 h-px w-full"
+                  style={{ backgroundColor: isRed ? "rgba(255,255,255,0.25)" : DIVIDER }}
+                />
+
+                {/* Bottom row — LEARN MORE + index */}
+                <div className="mt-6 flex items-center justify-between">
+                  <Link
+                    href={service.href}
+                    className="group inline-flex items-center gap-3 font-display text-xs font-bold uppercase tracking-[0.14em]"
+                    style={{ color: isRed ? "#FFFFFF" : DARK }}
+                  >
+                    <span
+                      className="flex h-8 w-8 items-center justify-center rounded-full border transition-transform duration-200 group-hover:translate-x-0.5"
+                      style={{
+                        borderColor: isRed ? "rgba(255,255,255,0.5)" : "rgba(17,17,17,0.3)",
+                      }}
+                    >
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                    Learn More
+                  </Link>
+                  <span
+                    className="font-display text-xs font-semibold tabular-nums tracking-[0.15em]"
+                    style={{ color: isRed ? "rgba(255,255,255,0.7)" : "#8A8A8A" }}
+                  >
+                    {pad(index + 1)}/{pad(TOTAL)}
                   </span>
-                </Link>
-              </div>
-            </article>
-          ))}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
-  );
-}
-
-function SectionHeading({ dark = false }: { dark?: boolean }) {
-  return (
-    <div className="flex max-w-xl flex-col gap-5">
-      <div className="flex items-center gap-3">
-        <span className="font-display text-sm font-bold tracking-[-0.02em] text-[#CC0000]">
-          02
-        </span>
-        <span className="h-px w-8 bg-[#CC0000]" />
-        <span
-          className={`font-display text-[0.72rem] font-bold uppercase tracking-[0.22em] ${
-            dark ? "text-white/60" : "text-white/60"
-          }`}
-        >
-          Our Capabilities
-        </span>
-      </div>
-      <h2 className="font-display text-3xl font-extrabold leading-[1.06] tracking-[-0.02em] text-white sm:text-4xl lg:text-5xl">
-        Built for the toughest freight
-      </h2>
-      <p className="text-base text-white/70 sm:text-lg">
-        Specialized capabilities across every major industrial sector in Western Canada.
-      </p>
-      <Link
-        href="/services"
-        className="group mt-1 inline-flex w-fit items-center gap-2 whitespace-nowrap font-display text-sm font-bold uppercase tracking-[0.08em] text-white transition-colors hover:text-[#FF4646]"
-      >
-        All Services
-        <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-      </Link>
-    </div>
   );
 }
