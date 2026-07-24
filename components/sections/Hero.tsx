@@ -9,6 +9,8 @@ import {
   type Variants,
 } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+import { Magnetic } from "@/components/motion/Magnetic";
+import { AnimatedStat } from "@/components/motion/AnimatedStat";
 
 interface HeroStat {
   value: string;
@@ -50,25 +52,38 @@ export function Hero({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const parallaxScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.14]);
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const parallaxScale = useTransform(scrollYProgress, [0, 1], [1.06, 1.2]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   const container: Variants = {
     hidden: {},
     show: {
       transition: shouldReduce
         ? {}
-        : { staggerChildren: 0.09, delayChildren: 0.05 },
+        : { staggerChildren: 0.08, delayChildren: 0.35 },
     },
   };
   const item: Variants = {
-    hidden: shouldReduce ? { opacity: 0 } : { opacity: 0, y: 26 },
+    hidden: shouldReduce ? { opacity: 0 } : { opacity: 0, y: 24 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: EASE },
+      transition: { duration: 0.8, ease: EASE },
     },
   };
+  const wordMask: Variants = {
+    hidden: shouldReduce ? { opacity: 0 } : { y: "115%" },
+    show: {
+      y: "0%",
+      opacity: 1,
+      transition: { duration: 0.85, ease: EASE },
+    },
+  };
+
+  const headingText = title || eyebrow;
+  const words = headingText.split(" ");
 
   return (
     <section
@@ -77,23 +92,23 @@ export function Hero({
         isCenter ? "justify-center" : "justify-start"
       } bg-[#EDEDE7] ${
         isFull
-          ? "min-h-[92vh] pt-32 pb-16"
-          : "min-h-[52vh] lg:min-h-[60vh] pt-32 pb-16"
+          ? "min-h-[100svh] pt-32 pb-20"
+          : "min-h-[54vh] lg:min-h-[62vh] pt-32 pb-16"
       }`}
     >
       {/* Parallax background image */}
       <motion.div
         aria-hidden
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat will-change-transform"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           y: shouldReduce ? 0 : parallaxY,
-          scale: shouldReduce ? 1.05 : parallaxScale,
+          scale: shouldReduce ? 1.06 : parallaxScale,
         }}
       />
 
       {/* Editorial light wash — heavier where the type sits, photo stays legible elsewhere */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#F7F7F3] via-[#F7F7F3]/82 to-[#F7F7F3]/25 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#F7F7F3] via-[#F7F7F3]/80 to-[#F7F7F3]/20 pointer-events-none" />
       {!isCenter && (
         <div className="absolute inset-0 bg-gradient-to-r from-[#F7F7F3] via-[#F7F7F3]/55 to-transparent pointer-events-none" />
       )}
@@ -101,13 +116,21 @@ export function Hero({
         <div className="absolute inset-0 [background:radial-gradient(120%_90%_at_50%_60%,transparent_10%,rgba(247,247,243,0.75)_75%)] pointer-events-none" />
       )}
 
+      {/* Cinematic vignette for depth */}
+      <div className="absolute inset-0 pointer-events-none [background:radial-gradient(130%_100%_at_50%_0%,transparent_55%,rgba(17,17,17,0.10)_100%)]" />
+
       {/* Fine dot texture */}
-      <div className="absolute inset-0 bg-[radial-gradient(#B7B7AE_1px,transparent_1px)] [background-size:26px_26px] opacity-[0.14] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#B7B7AE_1px,transparent_1px)] [background-size:26px_26px] opacity-[0.12] pointer-events-none" />
 
       {/* Top hairline accent */}
       <div className="absolute top-0 left-0 right-0 h-px bg-[#E6E6E6] pointer-events-none" />
 
-      <div className="relative z-10 max-w-[1280px] w-full mx-auto px-5 lg:px-10">
+      <motion.div
+        style={
+          shouldReduce ? undefined : { y: contentY, opacity: contentOpacity }
+        }
+        className="relative z-10 max-w-[1280px] w-full mx-auto px-5 lg:px-10"
+      >
         <motion.div
           variants={container}
           initial="hidden"
@@ -117,32 +140,48 @@ export function Hero({
           }`}
         >
           {/* Eyebrow */}
-          {title ? (
-            <>
-              <motion.div
-                variants={item}
-                className={`flex items-center gap-3 ${isCenter ? "justify-center" : ""}`}
-              >
-                <span className="h-3.5 w-[3px] bg-[#CC0000]" />
-                <span className="font-display text-[0.72rem] font-bold uppercase tracking-[0.22em] text-[#CC0000]">
-                  {eyebrow}
-                </span>
-              </motion.div>
-              <motion.h1
-                variants={item}
-                className="font-display font-extrabold text-[#111111] text-4xl sm:text-5xl lg:text-6xl xl:text-[4.75rem] leading-[1.02] tracking-[-0.02em]"
-              >
-                {title}
-              </motion.h1>
-            </>
-          ) : (
-            <motion.h1
-              variants={item}
-              className="font-display font-extrabold text-[#111111] text-4xl sm:text-5xl lg:text-5xl leading-[1.04] tracking-[-0.02em] whitespace-nowrap"
-            >
+          <motion.div
+            variants={item}
+            className={`flex items-center gap-3 ${isCenter ? "justify-center" : ""}`}
+          >
+            <motion.span
+              className="block h-3.5 w-[3px] bg-[#CC0000]"
+              initial={shouldReduce ? undefined : { scaleY: 0 }}
+              animate={shouldReduce ? undefined : { scaleY: 1 }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.3 }}
+              style={{ transformOrigin: "bottom" }}
+            />
+            <span className="font-display text-[0.72rem] font-bold uppercase tracking-[0.22em] text-[#CC0000]">
               {eyebrow}
-            </motion.h1>
-          )}
+            </span>
+          </motion.div>
+
+          {/* Word-mask heading reveal */}
+          <h1
+            aria-label={headingText}
+            className={`font-display font-extrabold text-[#111111] tracking-[-0.02em] ${
+              title
+                ? "text-4xl sm:text-5xl lg:text-6xl xl:text-[4.9rem] leading-[1.0]"
+                : "text-4xl sm:text-5xl lg:text-5xl leading-[1.04]"
+            }`}
+          >
+            {words.map((word, i) => (
+              <span
+                key={`${word}-${i}`}
+                aria-hidden
+                className="inline-block overflow-hidden align-bottom"
+                style={{ clipPath: "inset(-25% -6% -25% -6%)" }}
+              >
+                <motion.span
+                  variants={wordMask}
+                  className="inline-block will-change-transform"
+                >
+                  {word}
+                </motion.span>
+                {i < words.length - 1 ? " " : ""}
+              </span>
+            ))}
+          </h1>
 
           <motion.p
             variants={item}
@@ -161,14 +200,16 @@ export function Hero({
               }`}
             >
               {ctaPrimary && (
-                <Button
-                  href={ctaPrimary.href}
-                  variant="primary"
-                  showArrow
-                  className="!text-base !py-3.5 !px-8"
-                >
-                  {ctaPrimary.label}
-                </Button>
+                <Magnetic strength={0.35}>
+                  <Button
+                    href={ctaPrimary.href}
+                    variant="primary"
+                    showArrow
+                    className="!text-base !py-3.5 !px-8"
+                  >
+                    {ctaPrimary.label}
+                  </Button>
+                </Magnetic>
               )}
               {ctaSecondary && (
                 <Button
@@ -191,10 +232,10 @@ export function Hero({
               {stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="flex flex-col gap-1 bg-[#FFFFFF]/80 px-4 py-4 backdrop-blur-sm"
+                  className="group flex flex-col gap-1 bg-[#FFFFFF]/80 px-4 py-4 backdrop-blur-sm transition-colors duration-300 hover:bg-white"
                 >
                   <dt className="font-display text-xl font-extrabold tracking-tight text-[#111111] sm:text-2xl">
-                    {stat.value}
+                    <AnimatedStat value={stat.value} />
                   </dt>
                   <dd className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#6B6B6B]">
                     {stat.label}
@@ -204,7 +245,7 @@ export function Hero({
             </motion.dl>
           )}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll cue (full hero only) */}
       {isFull && !shouldReduce && (
@@ -212,7 +253,7 @@ export function Hero({
           aria-hidden
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
           className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
         >
           <span className="font-display text-[0.62rem] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B]">

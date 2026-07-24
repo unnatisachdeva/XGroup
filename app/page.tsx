@@ -152,7 +152,7 @@ export default function Home() {
     <div className="flex w-full flex-col bg-[#F7F7F3]">
       {/* Hero */}
       <Hero
-        // height="full"
+        height="full"
         eyebrow="Asset-Based Fleet & 24/7 Dispatch"
         title="Owned Trucks. Proven Ground."
         subtitle="Western Canada based trucking, serving Canada and the USA, from Laredo to Prudhoe Bay — safely and reliably keeping your supply chain moving."
