@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Shield, Truck, Phone } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
+import { Magnetic } from "@/components/motion/Magnetic";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -54,22 +55,24 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-8">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative font-display text-sm font-semibold transition-colors duration-200 py-1 ${
+                className={`group relative font-display text-sm font-semibold transition-colors duration-200 py-1 ${
                   isActive ? "text-[#CC0000]" : "text-[#4F4F4F] hover:text-[#111111]"
                 }`}
               >
                 {link.label}
+                {/* Hover underline reveal */}
+                <span className="pointer-events-none absolute -bottom-0.5 left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[#CC0000] transition-transform duration-300 ease-out group-hover:scale-x-100" />
                 {isActive && (
                   <motion.div
                     layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#CC0000] rounded-full"
+                    className="absolute -bottom-0.5 left-0 right-0 h-[2px] bg-[#CC0000] rounded-full"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -84,12 +87,18 @@ export function Header() {
             href={`tel:${SITE_CONFIG.phone}`}
             className="flex items-center gap-2 text-xs font-display font-semibold text-[#4F4F4F] hover:text-[#CC0000] transition-colors px-3 py-1.5 rounded-full border border-[#E6E6E6] hover:border-[#CC0000]/40"
           >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#CC0000] opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#CC0000]" />
+            </span>
             <Phone className="w-3.5 h-3.5 text-[#CC0000]" />
             <span>24/7 Dispatch</span>
           </a>
-          <Button href="/get-a-quote" variant="primary" showArrow>
-            Request Service
-          </Button>
+          <Magnetic strength={0.4}>
+            <Button href="/get-a-quote" variant="primary" showArrow>
+              Request Service
+            </Button>
+          </Magnetic>
         </div>
 
         {/* Mobile Nav Toggle & Quick Action */}
