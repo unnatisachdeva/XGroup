@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { Phone, ArrowRight } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
+import { Magnetic } from "@/components/motion/Magnetic";
 
 interface CtaBannerProps {
   eyebrow?: string;
@@ -66,8 +67,16 @@ export function CtaBanner({
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-r from-[#111111] via-[#111111]/92 to-[#111111]/60" />
-      {/* Accent hairline top */}
-      <div className="absolute top-0 left-0 h-[3px] w-24 bg-[#CC0000]" />
+      {/* Fine grid texture for industrial depth */}
+      <div className="absolute inset-0 opacity-[0.06] pointer-events-none [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:60px_60px]" />
+      {/* Accent hairline top — grows on view */}
+      <motion.div
+        className="absolute top-0 left-0 h-[3px] bg-[#CC0000]"
+        initial={shouldReduce ? { width: 96 } : { width: 0 }}
+        whileInView={{ width: 96 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
+      />
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-5 lg:px-10 py-20 lg:py-24">
         <motion.div
@@ -104,13 +113,15 @@ export function CtaBanner({
             variants={item}
             className="flex flex-col items-start gap-5 lg:col-span-4 lg:items-end lg:text-right"
           >
-            <a
-              href={buttonHref}
-              className="group inline-flex items-center gap-2.5 rounded-full bg-[#CC0000] px-8 py-4 font-display text-base font-bold text-white shadow-[0_10px_30px_rgba(204,0,0,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#E60000] hover:shadow-[0_14px_38px_rgba(204,0,0,0.5)]"
-            >
-              {buttonLabel}
-              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </a>
+            <Magnetic strength={0.4}>
+              <a
+                href={buttonHref}
+                className="group inline-flex items-center gap-2.5 rounded-full bg-[#CC0000] px-8 py-4 font-display text-base font-bold text-white shadow-[0_10px_30px_rgba(204,0,0,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#E60000] hover:shadow-[0_14px_38px_rgba(204,0,0,0.5)]"
+              >
+                {buttonLabel}
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </a>
+            </Magnetic>
 
             <a
               href={`tel:${SITE_CONFIG.phone}`}

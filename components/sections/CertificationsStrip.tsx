@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { CERTIFICATIONS } from "@/lib/constants";
+import { TextReveal } from "@/components/motion/TextReveal";
 
 const CERT_IMAGE_MAP: Record<string, string> = {
   "ACE / ACI Bonded Carrier": "/cert-ace.svg",
@@ -29,9 +30,11 @@ export function CertificationsStrip() {
           </span>
         </div>
         <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
-          <h2 className="max-w-xl font-display text-2xl font-extrabold tracking-[-0.01em] text-[#111111] sm:text-3xl">
-            Certified, bonded, and cleared for cross-border freight
-          </h2>
+          <TextReveal
+            as="h2"
+            text="Certified, bonded, and cleared for cross-border freight"
+            className="max-w-xl font-display text-2xl font-extrabold tracking-[-0.01em] text-[#111111] sm:text-3xl"
+          />
           <p className="text-sm text-[#6B6B6B] sm:text-right">
             Compliance credentials that keep your loads moving.
           </p>
