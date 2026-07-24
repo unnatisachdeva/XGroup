@@ -85,10 +85,16 @@ export default function ServicesPage() {
       const target = document.getElementById(id);
       if (!target) return;
 
-      target.scrollIntoView({
-        behavior: smooth && !prefersReducedMotion ? "smooth" : "auto",
-        block: "start",
-      });
+      const lenis = window.__lenis;
+      if (lenis && !prefersReducedMotion) {
+        // Drive the shared smooth-scroll layer so it doesn't fight native scroll.
+        lenis.scrollTo(target, { offset: -110, immediate: !smooth });
+      } else {
+        target.scrollIntoView({
+          behavior: smooth && !prefersReducedMotion ? "smooth" : "auto",
+          block: "start",
+        });
+      }
 
       setHighlightedId(id);
       window.clearTimeout(highlightTimer.current);
@@ -127,7 +133,10 @@ export default function ServicesPage() {
         focusService(id, smooth);
         settleTimer = window.setTimeout(() => {
           const target = document.getElementById(id);
-          target?.scrollIntoView({ behavior: "auto", block: "start" });
+          if (!target) return;
+          const lenis = window.__lenis;
+          if (lenis) lenis.scrollTo(target, { offset: -110, immediate: true });
+          else target.scrollIntoView({ behavior: "auto", block: "start" });
         }, 320);
       });
     };
